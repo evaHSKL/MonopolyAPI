@@ -11,41 +11,30 @@ import org.junit.jupiter.api.Test;
 import eva.monopoly.network.client.Client;
 import eva.monopoly.network.server.Server;
 
-
-class SocketTest
-{
+class SocketTest {
 
 	@Test
-	void test()
-	{
+	void test() {
 		final String serverName = "Server";
 		final String clientName = "Client";
-		try
-		{
-			Server server = new Server(25565, serverName, (e) ->
-			{
+		try {
+			Server server = new Server(25565, serverName, (e) -> {
 				fail("Fehler mit Client", e);
 			});
 
-			Client client = new Client("localhost", 25565, clientName, (e) ->
-			{
+			Client client = new Client("localhost", 25565, clientName, (e) -> {
 				fail("Fehler mit Server", e);
 			});
 
-			try
-			{
+			try {
 				Thread.sleep(20);
-			}
-			catch(InterruptedException e)
-			{
+			} catch (InterruptedException e) {
 				fail("Interrupted", e);
 			}
 
 			assertNotNull(server.getSocketConnector(clientName));
 			assertEquals(client.getRemoteName(), serverName);
-		}
-		catch(IOException e)
-		{
+		} catch (IOException e) {
 			fail("Fehler mit Beim Erstellen", e);
 		}
 	}

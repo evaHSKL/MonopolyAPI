@@ -7,8 +7,12 @@ import eva.monopoly.game.card.Card;
 import eva.monopoly.game.player.Player;
 
 public class GameBoard {
-	List<Player> players = new ArrayList<>();
-	List<Card> EventCards = new ArrayList<>();
-	List<Card> CommunityCards = new ArrayList<>();
+	private List<Player> players = new ArrayList<>();
+	private List<Card> EventCards = new ArrayList<>();
+	private List<Card> CommunityCards = new ArrayList<>();
+
+	public GameBoard() {
+
+	}
 
 }

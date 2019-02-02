@@ -2,19 +2,15 @@ package eva.monopoly.network.messages;
 
 import eva.monopoly.network.api.ExchangeMessage;
 
+public class NameInfo extends ExchangeMessage {
+	private static final long serialVersionUID = 3601976405972934497L;
+	String name;
 
-public class NameInfo extends ExchangeMessage
-{
-	private static final long	serialVersionUID	= 3601976405972934497L;
-	String						name;
-
-	public String getName()
-	{
+	public String getName() {
 		return name;
 	}
 
-	public NameInfo(String name)
-	{
+	public NameInfo(String name) {
 		this.name = name;
 	}
 }

@@ -1,5 +1,7 @@
 package eva.monopoly.game.player;
 
+import eva.monopoly.game.card.cards.UnjailCard;
+
 public interface Player {
 
 	// Player
@@ -9,8 +11,12 @@ public interface Player {
 
 	// Money
 	public int getMoney();
+	
+	public int getHouses();
+	
+	public int getHotels();
 
-	public int addMoney(int money);
+	public int modifyMoney(int money);
 
 	public int removeMoney(int money);
 
@@ -20,12 +26,14 @@ public interface Player {
 
 	public void releaseFromJail();
 
-	public void moveToTaregt(String target);
+	public void moveToTarget(String target);
 
-	public void moveToNextTarget(String target);
+	public void moveToNextTarget(String target, double modifire);
 
 	public void moveAmount(int amount);
 
 	public void setPayDouble();
+
+	public void pickupCard(UnjailCard unjailCard);
 
 }

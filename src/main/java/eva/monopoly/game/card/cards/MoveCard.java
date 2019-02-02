@@ -13,7 +13,7 @@ public class MoveCard extends Card {
 
 	@Override
 	public void action(Player p) {
-		p.moveToTaregt(target);
+		p.moveToTarget(target);
 	}
 
 }

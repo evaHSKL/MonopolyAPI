@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eva.monopoly.game.card.Card;
+import eva.monopoly.game.card.cards.UnjailCard;
 import eva.monopoly.game.player.Player;
 
 public class GameBoard {
@@ -15,4 +16,11 @@ public class GameBoard {
 
 	}
 
+	public void pickupCard(UnjailCard eventUnjailCard, Player p) {
+		// TODO Auto-generated method stub
+	}
+
+	public List<Player> getPlayers() {
+		return players;
+	}
 }

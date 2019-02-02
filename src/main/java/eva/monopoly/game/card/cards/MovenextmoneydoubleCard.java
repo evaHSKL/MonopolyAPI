@@ -13,8 +13,7 @@ public class MovenextmoneydoubleCard extends Card {
 
 	@Override
 	public void action(Player p) {
-		p.setPayDouble();
-		p.moveToNextTarget(target);
+		p.moveToNextTarget(target, 2);
 	}
 
 }

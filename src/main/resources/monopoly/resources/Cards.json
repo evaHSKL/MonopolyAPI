@@ -74,8 +74,8 @@
 		"type": "event",
 		"action": {
 			"type": "moneybuildings",
-			"house": 25,
-			"hotel": 100
+			"house": -25,
+			"hotel": -100
 		}
 	},
 	{
@@ -249,8 +249,8 @@
 		"type": "community",
 		"action": {
 			"type": "moneybuildings",
-			"house": 40,
-			"hotel": 115
+			"house": -40,
+			"hotel": -115
 		}
 	}
 ]

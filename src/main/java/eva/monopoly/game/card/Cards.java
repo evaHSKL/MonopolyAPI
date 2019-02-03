@@ -31,26 +31,28 @@ public class Cards {
 		try {
 			Path path = ResourceReaderUtil.getResourcePath("monopoly/resources/Cards.json");
 			JsonArray json = ResourceReaderUtil.getObjectAsJsonFromFile(path, JsonArray.class);
-
-			for (int i = 0; i < json.size(); i++) {
-				JsonElement element = json.get(i);
-				JsonObject obj = element.getAsJsonObject();
-
-				Card card = loadCard(obj);
-				switch (card.getCardType()) {
-				case EVENT:
-					eventCards.add(card);
-					break;
-				case COMMUNITY:
-					communityCards.add(card);
-					break;
-				}
-			}
+			iterrateCards(json, eventCards, communityCards);
 		} catch (URISyntaxException | IOException | IllegalArgumentException e) {
 			e.printStackTrace();
 		}
-
 		return new AbstractMap.SimpleEntry<>(eventCards, communityCards);
+	}
+
+	private static void iterrateCards(JsonArray json, ArrayList<Card> eventCards, ArrayList<Card> communityCards) {
+		for (int i = 0; i < json.size(); i++) {
+			JsonElement element = json.get(i);
+			JsonObject obj = element.getAsJsonObject();
+
+			Card card = loadCard(obj);
+			switch (card.getCardType()) {
+			case EVENT:
+				eventCards.add(card);
+				break;
+			case COMMUNITY:
+				communityCards.add(card);
+				break;
+			}
+		}
 	}
 
 	private static Card loadCard(JsonObject obj) {
@@ -59,7 +61,7 @@ public class Cards {
 
 		JsonObject objAction = obj.get("action").getAsJsonObject();
 		String actionType = objAction.get("type").getAsString();
-		
+
 		String target;
 		int amount;
 		int house;

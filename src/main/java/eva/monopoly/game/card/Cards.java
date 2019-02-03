@@ -44,7 +44,7 @@ public class Cards {
 			JsonObject obj = element.getAsJsonObject();
 
 			Card card = loadCard(obj);
-			switch (card.getCardType()) {
+			switch (card.getType()) {
 			case EVENT:
 				eventCards.add(card);
 				break;

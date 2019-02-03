@@ -1,5 +1,6 @@
 package eva.monopoly.game.card.cards;
 
+import eva.monopoly.game.GameBoard;
 import eva.monopoly.game.card.Card;
 import eva.monopoly.game.player.Player;
 
@@ -12,8 +13,9 @@ public class MoneyCard extends Card {
 	}
 
 	@Override
-	public void action(Player p) {
-		p.modifyMoney(amount);
+	public void action(Player p, GameBoard board) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

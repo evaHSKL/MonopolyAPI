@@ -1,39 +1,103 @@
 package eva.monopoly.game.player;
 
+import java.util.ArrayList;
+
 import eva.monopoly.game.card.cards.UnjailCard;
+import eva.monopoly.game.street.Street;
 
-public interface Player {
+public class Player {
+	private String name;
+	private int money;
+	private ArrayList<Street> streets = new ArrayList<>();
+	private Pawn playerPawn;
+	private boolean jailed;
 
-	// Player
-	public Pawn getPawn();
+	public Player(String name, Pawn playerPawn) {
+		money = 1500;
+		this.name = name;
+		this.playerPawn = playerPawn;
+		jailed = false;
+	}
 
-	public String getName();
+	public Pawn getPawn() {
+		return playerPawn;
+	}
 
-	// Money
-	public int getMoney();
-	
-	public int getHouses();
-	
-	public int getHotels();
+	public String getName() {
+		return name;
+	}
 
-	public int modifyMoney(int money);
+	public int getMoney() {
+		return money;
+	}
 
-	public int removeMoney(int money);
+	public int getHouses() {
+		// TODO über Liste von Straßen iterieren um Anzahl Häuser in Besitz
+		// herauszufinden
+		int amount = 0;
+		for (Street i : streets) {
+			// amount += i.getHouse();
+		}
+		return amount;
+	}
 
-	public boolean transferMoney(Player p, int money);
+	public int getHotels() {
+		// TODO über Liste von Straßen iterieren um Anzahl Hotels in Besitz
+		// herauszufinden
+		int amount = 0;
+		for (Street i : streets) {
+			// amount += i.getHotel();
+		}
+		return amount;
+	}
 
-	public void sendToJail();
+	public void modifyMoney(int money) {
+		this.money += money;
+	}
 
-	public void releaseFromJail();
+	public void transferMoney(Player p, int money) {
+		modifyMoney(-money);
+		p.modifyMoney(money);
+	}
 
-	public void moveToTarget(String target);
+	public void sendToJail() {
+		// TODO Auto-generated method stub
+		// moveToTarget("jail");
+		jailed = true;
+	}
 
-	public void moveToNextTarget(String target, double modifire);
+	public void releaseFromJail() {
+		jailed = false;
 
-	public void moveAmount(int amount);
+	}
 
-	public void setPayDouble();
+	public boolean isJailed() {
+		return jailed;
+	}
 
-	public void pickupCard(UnjailCard unjailCard);
+	public void moveToTarget(String target) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void moveToNextTarget(String target, double modifire) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void moveAmount(int amount) {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void setPayDouble() {
+		// TODO Auto-generated method stub
+
+	}
+
+	public void pickupCard(UnjailCard unjailCard) {
+		// TODO Auto-generated method stub
+
+	}
 
 }

@@ -7,10 +7,10 @@
 			"twohouses": 30,
 			"threehouses": 90,
 			"fourhouses": 160,
-			"hotel": 250
+			"hotel": 250,
+			"housecost": 50
 		},
 		"mortgagevalue": 30,
-		"housecost": 50,
 		"group": "brown",
 		"cost": 60
 	},
@@ -22,18 +22,12 @@
 			"twohouses": 60,
 			"threehouses": 180,
 			"fourhouses": 320,
-			"hotel": 450
+			"hotel": 450,
+			"housecost": 50
 		},
 		"mortgagevalue": 30,
-		"housecost": 50,
 		"group": "brown",
 		"cost": 60
-		
-	},
-	{
-		"name": "Einkommensteuer",
-		"rent": 200,
-		"group": "tax"
 	},
 	{
 		"name": "Poststrasse",
@@ -43,10 +37,10 @@
 			"twohouses": 100,
 			"threehouses": 300,
 			"fourhouses": 450,
-			"hotel": 600
+			"hotel": 600,
+			"housecost": 50
 		},
 		"mortgagevalue": 60,
-		"housecost": 50,
 		"group": "lightblue",
 		"cost": 120
 	},
@@ -58,10 +52,10 @@
 			"twohouses": 90,
 			"threehouses": 270,
 			"fourhouses": 400,
-			"hotel": 550
+			"hotel": 550,
+			"housecost": 50
 		},
 		"mortgagevalue": 50,
-		"housecost": 50,
 		"group": "lightblue",
 		"cost": 100
 	},
@@ -73,10 +67,10 @@
 			"twohouses": 90,
 			"threehouses": 270,
 			"fourhouses": 400,
-			"hotel": 550
+			"hotel": 550,
+			"housecost": 50
 		},
 		"mortgagevalue": 50,
-		"housecost": 50,
 		"group": "lightblue",
 		"cost": 100
 	},
@@ -88,10 +82,10 @@
 			"twohouses": 150,
 			"threehouses": 450,
 			"fourhouses": 625,
-			"hotel": 750
+			"hotel": 750,
+			"housecost": 100
 		},
 		"mortgagevalue": 70,
-		"housecost": 100,
 		"group": "pink",
 		"cost": 140
 	},
@@ -103,10 +97,10 @@
 			"twohouses": 150,
 			"threehouses": 450,
 			"fourhouses": 625,
-			"hotel": 750
+			"hotel": 750,
+			"housecost": 100
 		},
 		"mortgagevalue": 70,
-		"housecost": 100,
 		"group": "pink",
 		"cost": 140
 	},
@@ -118,10 +112,10 @@
 			"twohouses": 180,
 			"threehouses": 500,
 			"fourhouses": 700,
-			"hotel": 900
+			"hotel": 900,
+			"housecost": 100
 		},
 		"mortgagevalue": 80,
-		"housecost": 100,
 		"group": "pink",
 		"cost": 160
 	},
@@ -133,10 +127,10 @@
 			"twohouses": 200,
 			"threehouses": 550,
 			"fourhouses": 750,
-			"hotel": 950
+			"hotel": 950,
+			"housecost": 100
 		},
 		"mortgagevalue": 90,
-		"housecost": 100,
 		"group": "orange",
 		"cost": 180
 	},
@@ -148,10 +142,10 @@
 			"twohouses": 200,
 			"threehouses": 550,
 			"fourhouses": 750,
-			"hotel": 950
+			"hotel": 950,
+			"housecost": 100
 		},
 		"mortgagevalue": 90,
-		"housecost": 100,
 		"group": "orange",
 		"cost": 180
 	},
@@ -163,14 +157,13 @@
 			"twohouses": 220,
 			"threehouses": 600,
 			"fourhouses": 800,
-			"hotel": 1000
+			"hotel": 1000,
+			"housecost": 100
 		},
 		"mortgagevalue": 100,
-		"housecost": 100,
 		"group": "orange",
 		"cost": 200
-	}
-	,
+	},
 	{
 		"name": "Theaterstrasse",
 		"rent": {
@@ -179,10 +172,10 @@
 			"twohouses": 250,
 			"threehouses": 700,
 			"fourhouses": 875,
-			"hotel": 1050
+			"hotel": 1050,
+			"housecost": 150
 		},
 		"mortgagevalue": 110,
-		"housecost": 150,
 		"group": "red",
 		"cost": 220
 	},
@@ -194,10 +187,10 @@
 			"twohouses": 250,
 			"threehouses": 700,
 			"fourhouses": 875,
-			"hotel": 1050
+			"hotel": 1050,
+			"housecost": 150
 		},
 		"mortgagevalue": 110,
-		"housecost": 150,
 		"group": "red",
 		"cost": 220
 	},
@@ -209,10 +202,10 @@
 			"twohouses": 300,
 			"threehouses": 750,
 			"fourhouses": 925,
-			"hotel": 1100
+			"hotel": 1100,
+			"housecost": 150
 		},
 		"mortgagevalue": 120,
-		"housecost": 150,
 		"group": "red",
 		"cost": 240
 	},
@@ -224,10 +217,10 @@
 			"twohouses": 330,
 			"threehouses": 800,
 			"fourhouses": 975,
-			"hotel": 1150
+			"hotel": 1150,
+			"housecost": 150
 		},
 		"mortgagevalue": 130,
-		"housecost": 150,
 		"group": "yellow",
 		"cost": 260
 	},
@@ -239,10 +232,10 @@
 			"twohouses": 330,
 			"threehouses": 800,
 			"fourhouses": 975,
-			"hotel": 1150
+			"hotel": 1150,
+			"housecost": 150
 		},
 		"mortgagevalue": 130,
-		"housecost": 150,
 		"group": "yellow",
 		"cost": 260
 	},
@@ -254,10 +247,10 @@
 			"twohouses": 360,
 			"threehouses": 850,
 			"fourhouses": 1025,
-			"hotel": 1200
+			"hotel": 1200,
+			"housecost": 150
 		},
 		"mortgagevalue": 140,
-		"housecost": 150,
 		"group": "yellow",
 		"cost": 280
 	},
@@ -269,10 +262,10 @@
 			"twohouses": 390,
 			"threehouses": 900,
 			"fourhouses": 1100,
-			"hotel": 1275
+			"hotel": 1275,
+			"housecost": 200
 		},
 		"mortgagevalue": 150,
-		"housecost": 200,
 		"group": "green",
 		"cost": 300
 	},
@@ -284,10 +277,10 @@
 			"twohouses": 390,
 			"threehouses": 900,
 			"fourhouses": 1100,
-			"hotel": 1275
+			"hotel": 1275,
+			"housecost": 200
 		},
 		"mortgagevalue": 150,
-		"housecost": 200,
 		"group": "green",
 		"cost": 300
 	},
@@ -299,10 +292,10 @@
 			"twohouses": 450,
 			"threehouses": 1000,
 			"fourhouses": 1200,
-			"hotel": 1400
+			"hotel": 1400,
+			"housecost": 200
 		},
 		"mortgagevalue": 160,
-		"housecost": 200,
 		"group": "green",
 		"cost": 320
 	},
@@ -314,17 +307,12 @@
 			"twohouses": 500,
 			"threehouses": 1100,
 			"fourhouses": 1300,
-			"hotel": 1500
+			"hotel": 1500,
+			"housecost": 200
 		},
 		"mortgagevalue": 175,
-		"housecost": 200,
 		"group": "blue",
 		"cost": 350
-	},
-	{
-		"name": "Zusatzsteuer",
-		"rent": 100,
-		"group": "tax"
 	},
 	{
 		"name": "Schlossallee",
@@ -334,10 +322,10 @@
 			"twohouses": 600,
 			"threehouses": 1400,
 			"fourhouses": 1700,
-			"hotel": 2000
+			"hotel": 2000,
+			"housecost": 200
 		},
 		"mortgagevalue": 200,
-		"housecost": 200,
 		"group": "blue",
 		"cost": 400
 	},

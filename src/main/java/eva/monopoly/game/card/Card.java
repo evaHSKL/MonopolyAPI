@@ -1,25 +1,26 @@
 package eva.monopoly.game.card;
 
+import eva.monopoly.game.GameBoard;
 import eva.monopoly.game.player.Player;
 
 public abstract class Card {
 	private String text;
-	private CardType cardType;
+	private CardType type;
 
-	public Card(String text, CardType cardType) {
+	public Card(String text, CardType type) {
 		this.text = text;
-		this.cardType = cardType;
+		this.type = type;
 	}
 
 	public String getText() {
 		return text;
 	}
 
-	public CardType getCardType() {
-		return cardType;
+	public CardType getType() {
+		return type;
 	}
 
-	public abstract void action(Player p);
+	public abstract void action(Player p, GameBoard board);
 
 	public static enum CardType {
 		EVENT, COMMUNITY;

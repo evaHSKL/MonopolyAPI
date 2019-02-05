@@ -2,14 +2,13 @@ package eva.monopoly.game.street.streets;
 
 import eva.monopoly.game.GameBoard;
 import eva.monopoly.game.player.Player;
-import eva.monopoly.game.street.Street;
 
-public class FactoryStreet extends Street {
+public class BuyableFactoryStreet extends BuyableStreet {
 
 	private int factorsingle;
 	private int factorgroup;
 
-	public FactoryStreet(String name, int mortgageValue, String group, int cost, int factorsingle, int factorgroup) {
+	public BuyableFactoryStreet(String name, int mortgageValue, String group, int cost, int factorsingle, int factorgroup) {
 		super(name, mortgageValue, group, cost);
 		this.factorsingle = factorsingle;
 		this.factorgroup = factorgroup;

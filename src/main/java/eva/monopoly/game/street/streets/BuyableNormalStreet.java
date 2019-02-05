@@ -2,9 +2,8 @@ package eva.monopoly.game.street.streets;
 
 import eva.monopoly.game.GameBoard;
 import eva.monopoly.game.player.Player;
-import eva.monopoly.game.street.Street;
 
-public class NormalStreet extends Street {
+public class BuyableNormalStreet extends BuyableStreet {
 
 	private int nohouse;
 	private int onehouse;
@@ -15,7 +14,7 @@ public class NormalStreet extends Street {
 	private int housecost;
 	private int houses;
 
-	public NormalStreet(String name, int mortgageValue, String group, int cost, int nohouse, int onehouse,
+	public BuyableNormalStreet(String name, int mortgageValue, String group, int cost, int nohouse, int onehouse,
 			int twohouses, int threehouses, int fourhouses, int hotel, int housecost) {
 		super(name, mortgageValue, group, cost);
 		this.nohouse = nohouse;

@@ -6,12 +6,17 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import eva.monopoly.game.street.streets.FactoryStreet;
-import eva.monopoly.game.street.streets.NormalStreet;
-import eva.monopoly.game.street.streets.TrainstationStreet;
+import eva.monopoly.game.street.streets.BuyableFactoryStreet;
+import eva.monopoly.game.street.streets.BuyableNormalStreet;
+import eva.monopoly.game.street.streets.BuyableStreet;
+import eva.monopoly.game.street.streets.BuyableTrainstationStreet;
+import eva.monopoly.game.street.streets.NonBuyableCommunityStreet;
+import eva.monopoly.game.street.streets.NonBuyableEventStreet;
+import eva.monopoly.game.street.streets.NonBuyableMoneyStreet;
+import eva.monopoly.game.street.streets.NonBuyableNormalStreet;
+import eva.monopoly.game.street.streets.NonBuyableStreet;
 import eva.monopoly.utils.ResourceReaderUtil;
 
 public class Streets {
@@ -20,23 +25,30 @@ public class Streets {
 		try {
 			Path path = ResourceReaderUtil.getResourcePath("monopoly/resources/Streets.json");
 			JsonObject json = ResourceReaderUtil.getObjectAsJsonFromFile(path, JsonObject.class);
-			System.out.println(json);
-			iterrateCards(json.get("streets").getAsJsonArray(), streets);
+			iterrateStreets(json, streets);
 		} catch (URISyntaxException | IOException | IllegalArgumentException e) {
 			e.printStackTrace();
 		}
 		return streets;
 	}
 
-	private static void iterrateCards(JsonArray json, ArrayList<Street> streets) {
-		for (int i = 0; i < json.size(); i++) {
-			JsonElement element = json.get(i);
-			JsonObject obj = element.getAsJsonObject();
-			streets.add(loadStreet(obj));
+	private static void iterrateStreets(JsonObject json, ArrayList<Street> streets) {
+		JsonObject streetorder = json.get("streetorder").getAsJsonObject();
+		JsonArray objStreets = json.get("streets").getAsJsonArray();
+		JsonArray objSpecialstreets = json.get("specialstreets").getAsJsonArray();
+		for (int i = 1; streetorder.has(String.valueOf(i)); i++) {
+			String value = streetorder.get(String.valueOf(i)).getAsString();
+			String[] args = value.split(":");
+			int index = Integer.valueOf(args[1]);
+			if ("specialstreets".equals(args[0])) {
+				streets.add(loadNonBuyableStreet(objSpecialstreets.get(index).getAsJsonObject()));
+			} else if ("street".equals(args[0])) {
+				streets.add(loadBuyableStreet(objStreets.get(index).getAsJsonObject()));
+			}
 		}
 	}
 
-	private static Street loadStreet(JsonObject obj) {
+	private static BuyableStreet loadBuyableStreet(JsonObject obj) {
 		String name = obj.get("name").getAsString();
 		String group = obj.get("group").getAsString();
 		int mortgageValue = obj.get("mortgagevalue").getAsInt();
@@ -58,21 +70,21 @@ public class Streets {
 		int threestations;
 		int fourstations;
 
-		Street street = null;
+		BuyableStreet street = null;
 
 		switch (group) {
 		case "factory":
 			factorsingle = objRent.get("factorsingle").getAsInt();
 			factorgroup = objRent.get("factorgroup").getAsInt();
-			street = new FactoryStreet(name, mortgageValue, group, cost, factorsingle, factorgroup);
+			street = new BuyableFactoryStreet(name, mortgageValue, group, cost, factorsingle, factorgroup);
 			break;
 		case "trainstation":
 			onestation = objRent.get("onestation").getAsInt();
 			twostations = objRent.get("twostations").getAsInt();
 			threestations = objRent.get("threestations").getAsInt();
 			fourstations = objRent.get("fourstations").getAsInt();
-			street = new TrainstationStreet(name, mortgageValue, group, cost, onestation, twostations, threestations,
-					fourstations);
+			street = new BuyableTrainstationStreet(name, mortgageValue, group, cost, onestation, twostations,
+					threestations, fourstations);
 			break;
 		default:
 			nohouse = objRent.get("nohouse").getAsInt();
@@ -82,14 +94,37 @@ public class Streets {
 			fourhouses = objRent.get("fourhouses").getAsInt();
 			hotel = objRent.get("hotel").getAsInt();
 			housecost = objRent.get("housecost").getAsInt();
-			street = new NormalStreet(name, mortgageValue, group, cost, nohouse, onehouse, twohouses, threehouses,
-					fourhouses, hotel, housecost);
+			street = new BuyableNormalStreet(name, mortgageValue, group, cost, nohouse, onehouse, twohouses,
+					threehouses, fourhouses, hotel, housecost);
 			break;
 		}
 		return street;
 	}
 
-	public static void main(String[] args) {
-		System.out.println(loadStreets());
+	private static Street loadNonBuyableStreet(JsonObject obj) {
+		String name = obj.get("name").getAsString();
+
+		JsonObject objAction = obj.get("action").getAsJsonObject();
+
+		int amount;
+
+		NonBuyableStreet street = null;
+
+		switch (objAction.get("type").getAsString()) {
+		case "money":
+			amount = objAction.get("amount").getAsInt();
+			street = new NonBuyableMoneyStreet(name, amount);
+			break;
+		case "community":
+			street = new NonBuyableCommunityStreet(name);
+			break;
+		case "event":
+			street = new NonBuyableEventStreet(name);
+			break;
+		default:
+			street = new NonBuyableNormalStreet(name);
+			break;
+		}
+		return street;
 	}
 }

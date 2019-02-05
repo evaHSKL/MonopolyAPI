@@ -19,8 +19,9 @@ public class Streets {
 		ArrayList<Street> streets = new ArrayList<>();
 		try {
 			Path path = ResourceReaderUtil.getResourcePath("monopoly/resources/Streets.json");
-			JsonArray json = ResourceReaderUtil.getObjectAsJsonFromFile(path, JsonArray.class);
-			iterrateCards(json, streets);
+			JsonObject json = ResourceReaderUtil.getObjectAsJsonFromFile(path, JsonObject.class);
+			System.out.println(json);
+			iterrateCards(json.get("streets").getAsJsonArray(), streets);
 		} catch (URISyntaxException | IOException | IllegalArgumentException e) {
 			e.printStackTrace();
 		}
@@ -86,5 +87,9 @@ public class Streets {
 			break;
 		}
 		return street;
+	}
+
+	public static void main(String[] args) {
+		System.out.println(loadStreets());
 	}
 }

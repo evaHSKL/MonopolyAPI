@@ -2,10 +2,10 @@ package eva.monopoly.game.player;
 
 import java.util.ArrayList;
 
-import eva.monopoly.game.card.cards.UnjailCard;
 import eva.monopoly.game.street.Street;
 
 public class Player {
+	private static final int START_MONEY = 1500;
 	private String name;
 	private int money;
 	private ArrayList<Street> streets = new ArrayList<>();
@@ -13,7 +13,7 @@ public class Player {
 	private boolean jailed;
 
 	public Player(String name, Pawn playerPawn) {
-		money = 1500;
+		money = START_MONEY;
 		this.name = name;
 		this.playerPawn = playerPawn;
 		jailed = false;
@@ -31,24 +31,16 @@ public class Player {
 		return money;
 	}
 
-	public int getHouses() {
-		// TODO über Liste von Straßen iterieren um Anzahl Häuser in Besitz
-		// herauszufinden
-		int amount = 0;
-		for (Street i : streets) {
-			// amount += i.getHouse();
-		}
-		return amount;
+	public ArrayList<Street> getStreets() {
+		return streets;
 	}
 
-	public int getHotels() {
-		// TODO über Liste von Straßen iterieren um Anzahl Hotels in Besitz
-		// herauszufinden
-		int amount = 0;
-		for (Street i : streets) {
-			// amount += i.getHotel();
-		}
-		return amount;
+	public boolean addStreet(Street street) {
+		return streets.add(street);
+	}
+
+	public boolean removeStreet(Street street) {
+		return streets.remove(street);
 	}
 
 	public void modifyMoney(int money) {
@@ -61,43 +53,18 @@ public class Player {
 	}
 
 	public void sendToJail() {
-		// TODO Auto-generated method stub
-		// moveToTarget("jail");
 		jailed = true;
 	}
 
 	public void releaseFromJail() {
 		jailed = false;
-
 	}
 
 	public boolean isJailed() {
 		return jailed;
 	}
 
-	public void moveToTarget(String target) {
-		// TODO Auto-generated method stub
-
+	public static enum Pawn {
+		TOPHAT, THIMBLE, IRON, SHOE, BATTLESHIP, WHEELBARROW, DOG, CAR;
 	}
-
-	public void moveToNextTarget(String target, double modifire) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void moveAmount(int amount) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void setPayDouble() {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void pickupCard(UnjailCard unjailCard) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

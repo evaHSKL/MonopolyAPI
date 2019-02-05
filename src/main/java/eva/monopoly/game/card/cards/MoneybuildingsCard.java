@@ -3,6 +3,7 @@ package eva.monopoly.game.card.cards;
 import eva.monopoly.game.GameBoard;
 import eva.monopoly.game.card.Card;
 import eva.monopoly.game.player.Player;
+import eva.monopoly.game.street.Street;
 
 public class MoneybuildingsCard extends Card {
 	private int houseCosts;
@@ -20,4 +21,23 @@ public class MoneybuildingsCard extends Card {
 
 	}
 
+	private int getHouses(Player p) {
+		// TODO über Liste von Straßen iterieren um Anzahl Häuser in Besitz
+		// herauszufinden
+		int amount = 0;
+		for (Street i : p.getStreets()) {
+			// amount += i.getHouse();
+		}
+		return amount;
+	}
+
+	private int getHotels(Player p) {
+		// TODO über Liste von Straßen iterieren um Anzahl Hotels in Besitz
+		// herauszufinden
+		int amount = 0;
+		for (Street i : p.getStreets()) {
+			// amount += i.getHotel();
+		}
+		return amount;
+	}
 }

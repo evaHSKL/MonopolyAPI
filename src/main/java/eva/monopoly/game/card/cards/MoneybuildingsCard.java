@@ -3,7 +3,8 @@ package eva.monopoly.game.card.cards;
 import eva.monopoly.game.GameBoard;
 import eva.monopoly.game.card.Card;
 import eva.monopoly.game.player.Player;
-import eva.monopoly.game.street.Street;
+import eva.monopoly.game.street.streets.BuyableNormalStreet;
+import eva.monopoly.game.street.streets.BuyableStreet;
 
 public class MoneybuildingsCard extends Card {
 	private int houseCosts;
@@ -17,26 +18,27 @@ public class MoneybuildingsCard extends Card {
 
 	@Override
 	public void action(Player p, GameBoard board) {
-		// TODO Auto-generated method stub
-
+		p.modifyMoney(getHouses(p, board) * houseCosts + getHotels(p, board) * hotelCosts);
 	}
 
-	private int getHouses(Player p) {
-		// TODO über Liste von Straßen iterieren um Anzahl Häuser in Besitz
-		// herauszufinden
+	private int getHouses(Player p, GameBoard board) {
 		int amount = 0;
-		for (Street i : p.getStreets()) {
-			// amount += i.getHouse();
+		for (BuyableStreet i : board.getStreetsOfPlayer(p)) {
+			if (i instanceof BuyableNormalStreet) {
+				BuyableNormalStreet s = (BuyableNormalStreet) i;
+				amount += (s.getHouses() == 5 ? 0 : s.getHouses());
+			}
 		}
 		return amount;
 	}
 
-	private int getHotels(Player p) {
-		// TODO über Liste von Straßen iterieren um Anzahl Hotels in Besitz
-		// herauszufinden
+	private int getHotels(Player p, GameBoard board) {
 		int amount = 0;
-		for (Street i : p.getStreets()) {
-			// amount += i.getHotel();
+		for (BuyableStreet i : board.getStreetsOfPlayer(p)) {
+			if (i instanceof BuyableNormalStreet) {
+				BuyableNormalStreet s = (BuyableNormalStreet) i;
+				amount += (s.getHouses() == 5 ? 1 : 0);
+			}
 		}
 		return amount;
 	}

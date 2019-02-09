@@ -12,7 +12,6 @@ public class JailCard extends Card {
 
 	@Override
 	public void action(Player p, GameBoard board) {
-		// TODO Auto-generated method stub
-
+		p.sendToJail();
 	}
 }

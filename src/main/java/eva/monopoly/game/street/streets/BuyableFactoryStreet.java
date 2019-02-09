@@ -8,7 +8,8 @@ public class BuyableFactoryStreet extends BuyableStreet {
 	private int factorsingle;
 	private int factorgroup;
 
-	public BuyableFactoryStreet(String name, int mortgageValue, String group, int cost, int factorsingle, int factorgroup) {
+	public BuyableFactoryStreet(String name, int mortgageValue, String group, int cost, int factorsingle,
+			int factorgroup) {
 		super(name, mortgageValue, group, cost);
 		this.factorsingle = factorsingle;
 		this.factorgroup = factorgroup;
@@ -23,7 +24,7 @@ public class BuyableFactoryStreet extends BuyableStreet {
 	}
 
 	@Override
-	public int calculateCosts(Player p, GameBoard board, int dice) {
+	public int calculateCosts(Player p, GameBoard board, int dice, int modifier) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

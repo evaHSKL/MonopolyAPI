@@ -18,8 +18,7 @@ import eva.monopoly.game.card.cards.MoneybuildingsCard;
 import eva.monopoly.game.card.cards.MoneyplayerCard;
 import eva.monopoly.game.card.cards.MoveCard;
 import eva.monopoly.game.card.cards.MoveamountCard;
-import eva.monopoly.game.card.cards.MovenextCard;
-import eva.monopoly.game.card.cards.MovenextmoneydoubleCard;
+import eva.monopoly.game.card.cards.MovemoneydoubleCard;
 import eva.monopoly.game.card.cards.UnjailCard;
 import eva.monopoly.utils.ResourceReaderUtil;
 
@@ -80,17 +79,13 @@ public class Cards {
 			target = objAction.get("target").getAsString();
 			card = new MoveCard(text, type, target);
 			break;
-		case "movenext":
-			target = objAction.get("target").getAsString();
-			card = new MovenextCard(text, type, target);
-			break;
 		case "moveamount":
 			amount = objAction.get("amount").getAsInt();
 			card = new MoveamountCard(text, type, amount);
 			break;
-		case "movenextmoneydouble":
+		case "movemoneydouble":
 			target = objAction.get("target").getAsString();
-			card = new MovenextmoneydoubleCard(text, type, target);
+			card = new MovemoneydoubleCard(text, type, target);
 			break;
 		case "money":
 			amount = objAction.get("amount").getAsInt();

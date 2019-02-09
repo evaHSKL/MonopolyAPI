@@ -28,5 +28,5 @@ public abstract class BuyableStreet extends Street {
 		return cost;
 	}
 
-	public abstract int calculateCosts(Player p, GameBoard board, int dice);
+	public abstract int calculateCosts(Player p, GameBoard board, int dice, int modifier);
 }

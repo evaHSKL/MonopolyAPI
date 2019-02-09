@@ -10,8 +10,8 @@ public class BuyableTrainstationStreet extends BuyableStreet {
 	public int threestations;
 	public int fourstations;
 
-	public BuyableTrainstationStreet(String name, int mortgageValue, String group, int cost, int onestation, int twostations,
-			int threestations, int fourstations) {
+	public BuyableTrainstationStreet(String name, int mortgageValue, String group, int cost, int onestation,
+			int twostations, int threestations, int fourstations) {
 		super(name, mortgageValue, group, cost);
 		this.onestation = onestation;
 		this.twostations = twostations;
@@ -36,7 +36,7 @@ public class BuyableTrainstationStreet extends BuyableStreet {
 	}
 
 	@Override
-	public int calculateCosts(Player p, GameBoard board, int dice) {
+	public int calculateCosts(Player p, GameBoard board, int dice, int modifier) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

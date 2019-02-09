@@ -14,7 +14,6 @@ public class MoveamountCard extends Card {
 
 	@Override
 	public void action(Player p, GameBoard board) {
-		// TODO Auto-generated method stub
-
+		board.moveAmount(p, amount, 1);
 	}
 }

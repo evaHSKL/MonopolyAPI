@@ -14,7 +14,11 @@ public class MoneyplayerCard extends Card {
 
 	@Override
 	public void action(Player p, GameBoard board) {
-		// TODO Auto-generated method stub
-
+		for (Player pl : board.getPlayers()) {
+			if (pl != p) {
+				pl.modifyMoney(-amount);
+			}
+		}
+		p.modifyMoney(amount * (board.getPlayers().size() - 1));
 	}
 }

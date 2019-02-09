@@ -60,7 +60,7 @@ public class BuyableNormalStreet extends BuyableStreet {
 	}
 
 	@Override
-	public int calculateCosts(Player p, GameBoard board, int dice) {
+	public int calculateCosts(Player p, GameBoard board, int dice, int modifier) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

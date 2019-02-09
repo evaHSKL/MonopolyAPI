@@ -3,7 +3,7 @@ package eva.monopoly.game.street.streets;
 import eva.monopoly.game.GameBoard;
 import eva.monopoly.game.player.Player;
 
-public class NonBuyableEventStreet extends NonBuyableStreet{
+public class NonBuyableEventStreet extends NonBuyableStreet {
 
 	public NonBuyableEventStreet(String name) {
 		super(name);
@@ -11,7 +11,7 @@ public class NonBuyableEventStreet extends NonBuyableStreet{
 
 	@Override
 	public void action(Player p, GameBoard board, int dice) {
-		// TODO pickup event card
+		board.takeEventCard().action(p, board);
 	}
 
 }

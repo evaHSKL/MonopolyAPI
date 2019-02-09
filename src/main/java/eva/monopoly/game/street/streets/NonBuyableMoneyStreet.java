@@ -13,7 +13,7 @@ public class NonBuyableMoneyStreet extends NonBuyableStreet {
 
 	@Override
 	public void action(Player p, GameBoard board, int dice) {
-
+		p.modifyMoney(amount);
 	}
 
 }

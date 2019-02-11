@@ -36,9 +36,30 @@ public class BuyableTrainstationStreet extends BuyableStreet {
 	}
 
 	@Override
-	public int calculateCosts(Player p, GameBoard board, int dice, int modifier) {
-		// TODO Auto-generated method stub
-		return 0;
+	public void chargeFee(Player p, GameBoard board, int dice, int modifier) {
+		Player streetOwner = board.getBuyableStreets().get(this);
+
+		if (streetOwner == null || streetOwner == p) {
+			return;
+		}
+
+		int fee = getFee(streetOwner, board);
+		p.modifyMoney(-fee * modifier);
+		streetOwner.modifyMoney(fee * modifier);
 	}
 
+	private int getFee(Player p, GameBoard board) {
+		switch (getStreetGroup(p, board, getGroup()).size()) {
+		case 1:
+			return onestation;
+		case 2:
+			return twostations;
+		case 3:
+			return threestations;
+		case 4:
+			return fourstations;
+		default:
+			return 0;
+		}
+	}
 }

@@ -1,5 +1,9 @@
 package eva.monopoly.game.street.streets;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
+
 import eva.monopoly.game.GameBoard;
 import eva.monopoly.game.player.Player;
 import eva.monopoly.game.street.Street;
@@ -28,5 +32,28 @@ public abstract class BuyableStreet extends Street {
 		return cost;
 	}
 
-	public abstract int calculateCosts(Player p, GameBoard board, int dice, int modifier);
+	public abstract void chargeFee(Player p, GameBoard board, int dice, int modifier);
+
+	public boolean hasStreetGroup(Player p, GameBoard board, String group) {
+		for (Entry<BuyableStreet, Player> e : board.getBuyableStreets().entrySet()) {
+			if (e.getKey().getGroup().equals(group)) {
+				if (e.getValue() != p) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	public List<BuyableStreet> getStreetGroup(Player p, GameBoard board, String group) {
+		List<BuyableStreet> streetsOfPlayer = new ArrayList<>();
+		for (Entry<BuyableStreet, Player> e : board.getBuyableStreets().entrySet()) {
+			if (e.getKey().getGroup().equals(group)) {
+				if (e.getValue() == p) {
+					streetsOfPlayer.add(e.getKey());
+				}
+			}
+		}
+		return streetsOfPlayer;
+	}
 }

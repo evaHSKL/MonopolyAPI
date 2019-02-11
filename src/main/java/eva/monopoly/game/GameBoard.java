@@ -171,7 +171,7 @@ public class GameBoard {
 
 	private void streetAction(Player p, Street s, int moveAmount, int moneyModifier) {
 		if (s instanceof BuyableStreet) {
-			((BuyableStreet) s).calculateCosts(p, this, moveAmount, moneyModifier);
+			((BuyableStreet) s).chargeFee(p, this, moveAmount, moneyModifier);
 		} else if (s instanceof NonBuyableStreet) {
 			((NonBuyableStreet) s).action(p, this, moveAmount);
 		}

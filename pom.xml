@@ -8,7 +8,7 @@
 		<log4j.version>2.11.1</log4j.version>
 	</properties>
 
-	<groupId>eva.monopoly</groupId>
+	<groupId>eva.monopolyapi</groupId>
 	<artifactId>MonopolyAPI</artifactId>
 	<version>1.0-Snapshot</version>
 	<name>MonopolyAPI</name>

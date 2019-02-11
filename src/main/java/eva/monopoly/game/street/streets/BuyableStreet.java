@@ -32,7 +32,22 @@ public abstract class BuyableStreet extends Street {
 		return cost;
 	}
 
-	public abstract void chargeFee(Player p, GameBoard board, int dice, int modifier);
+	public int chargeFee(Player p, GameBoard board, int dice, int modifier) {
+		Player streetOwner = board.getBuyableStreets().get(this);
+
+		if (streetOwner == null || streetOwner == p) {
+			return 0;
+		}
+
+		int fee = getFee(streetOwner, board, dice);
+		fee = fee * modifier;
+		p.modifyMoney(-fee);
+		streetOwner.modifyMoney(fee);
+
+		return fee;
+	}
+
+	protected abstract int getFee(Player p, GameBoard board, int dice);
 
 	public boolean hasStreetGroup(Player p, GameBoard board, String group) {
 		for (Entry<BuyableStreet, Player> e : board.getBuyableStreets().entrySet()) {

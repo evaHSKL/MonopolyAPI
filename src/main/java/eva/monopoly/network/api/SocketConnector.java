@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 
 public class SocketConnector {
 	public final static Logger LOG = LoggerFactory.getLogger(SocketConnector.class);
+	public final static int STD_PORT = 25566;
 
 	final private static ExecutorService EXECUTOR = Executors.newCachedThreadPool();
 	final private static ExecutorService MESSAGE_DISPATCHER = Executors.newSingleThreadExecutor();

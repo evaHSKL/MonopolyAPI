@@ -169,12 +169,13 @@ public class GameBoard {
 		streetAction(p, streets.get(pos), amount, moneyModifier);
 	}
 
-	private void streetAction(Player p, Street s, int moveAmount, int moneyModifier) {
+	private int streetAction(Player p, Street s, int moveAmount, int moneyModifier) {
 		if (s instanceof BuyableStreet) {
-			((BuyableStreet) s).chargeFee(p, this, moveAmount, moneyModifier);
+			return ((BuyableStreet) s).chargeFee(p, this, moveAmount, moneyModifier);
 		} else if (s instanceof NonBuyableStreet) {
 			((NonBuyableStreet) s).action(p, this, moveAmount);
 		}
+		return 0;
 	}
 
 	public void moveTarget(Player p, String target, int moneyModifier) {

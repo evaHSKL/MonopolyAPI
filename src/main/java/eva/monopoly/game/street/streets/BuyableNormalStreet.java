@@ -77,19 +77,7 @@ public class BuyableNormalStreet extends BuyableStreet {
 	}
 
 	@Override
-	public void chargeFee(Player p, GameBoard board, int dice, int modifier) {
-		Player streetOwner = board.getBuyableStreets().get(this);
-
-		if (streetOwner == null || streetOwner == p) {
-			return;
-		}
-
-		int fee = getFee();
-		p.modifyMoney(-fee * modifier);
-		streetOwner.modifyMoney(fee * modifier);
-	}
-
-	private int getFee() {
+	protected int getFee(Player p, GameBoard board, int dice) {
 		switch (houses) {
 		case 0:
 			return nohouse;

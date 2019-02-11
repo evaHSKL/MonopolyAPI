@@ -36,19 +36,7 @@ public class BuyableTrainstationStreet extends BuyableStreet {
 	}
 
 	@Override
-	public void chargeFee(Player p, GameBoard board, int dice, int modifier) {
-		Player streetOwner = board.getBuyableStreets().get(this);
-
-		if (streetOwner == null || streetOwner == p) {
-			return;
-		}
-
-		int fee = getFee(streetOwner, board);
-		p.modifyMoney(-fee * modifier);
-		streetOwner.modifyMoney(fee * modifier);
-	}
-
-	private int getFee(Player p, GameBoard board) {
+	protected int getFee(Player p, GameBoard board, int dice) {
 		switch (getStreetGroup(p, board, getGroup()).size()) {
 		case 1:
 			return onestation;

@@ -1,18 +1,18 @@
 package eva.monopoly.api.network.api;
 
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 public class ExchangeMessageHandle<T extends ExchangeMessage> {
 	private final Class<T> clazz;
-	private final Consumer<T> consumer;
+	private final BiConsumer<SocketConnector, T> consumer;
 
-	public ExchangeMessageHandle(final Class<T> clazz, final Consumer<T> consumer) {
+	public ExchangeMessageHandle(final Class<T> clazz, final BiConsumer<SocketConnector, T> consumer) {
 		this.clazz = clazz;
 		this.consumer = consumer;
 	}
 
-	public void handle(final ExchangeMessage exMsg) {
+	public void handle(final SocketConnector connector, final ExchangeMessage exMsg) {
 		final T correctExchangeMsg = clazz.cast(exMsg);
-		consumer.accept(correctExchangeMsg);
+		consumer.accept(connector, correctExchangeMsg);
 	}
 }

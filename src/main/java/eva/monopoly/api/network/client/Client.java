@@ -3,7 +3,7 @@ package eva.monopoly.api.network.client;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,11 +18,11 @@ public class Client {
 	private SocketConnector socketConnector;
 	private String remoteName;
 
-	public Client(String host, int port, String name, Consumer<HandlerException> shutdownHandler)
+	public Client(String host, int port, String name, BiConsumer<SocketConnector, HandlerException> shutdownHandler)
 			throws UnknownHostException, IOException {
 		try {
 			SocketConnector socketConnector = new SocketConnector(new Socket(host, port), shutdownHandler);
-			socketConnector.registerHandle(NameInfo.class, nameInfo -> {
+			socketConnector.registerHandle(NameInfo.class, (con, nameInfo) -> {
 				this.socketConnector = socketConnector;
 				this.remoteName = nameInfo.getName();
 				LOG.info("Server Name: {}", nameInfo.getName());

@@ -3,7 +3,7 @@ package eva.monopoly.api.network.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.HashMap;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,14 +20,15 @@ public class Server {
 
 	private ServerSocket serverSocket;
 
-	public Server(int port, String name, Consumer<HandlerException> shutdownHandler) throws IOException {
+	public Server(int port, String name, BiConsumer<SocketConnector, HandlerException> shutdownHandler)
+			throws IOException {
 		try {
 			serverSocket = new ServerSocket(port);
 			final Runnable runnable = () -> {
 				try {
 					SocketConnector client = new SocketConnector(serverSocket.accept(), shutdownHandler);
 					LOG.info("Verbunden mit Client: {}", client.getSocket().getInetAddress().getHostAddress());
-					client.registerHandle(NameInfo.class, nameInfo -> {
+					client.registerHandle(NameInfo.class, (con, nameInfo) -> {
 						socketConnectors.put(nameInfo.getName(), client);
 						LOG.info("Client  Name: {}", nameInfo.getName());
 					});

@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,15 +27,15 @@ public class SocketConnector {
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 	private Future<?> future;
-	private Consumer<HandlerException> shutdownHandler;
+	private BiConsumer<SocketConnector, HandlerException> shutdownHandler;
 
 	private final ConcurrentHashMap<Class<? extends ExchangeMessage>, ExchangeMessageHandle<? extends ExchangeMessage>> handler = new ConcurrentHashMap<>();
 
-	public SocketConnector(final Socket socket, Consumer<HandlerException> shutdownHandler) {
+	public SocketConnector(final Socket socket, BiConsumer<SocketConnector, HandlerException> shutdownHandler) {
 		this.socket = socket;
 		this.shutdownHandler = shutdownHandler;
 
-		registerHandle(ExchangeMessage.class, (msg) -> LOG.warn("There was an unhandled message of type {}: {}",
+		registerHandle(ExchangeMessage.class, (con, msg) -> LOG.warn("There was an unhandled message of type {}: {}",
 				msg.getClass().getSimpleName(), msg.toString()));
 	}
 
@@ -115,7 +115,7 @@ public class SocketConnector {
 	}
 
 	private void shutdownConnection(String reason, Throwable e) {
-		shutdownHandler.accept(new HandlerException(reason, e));
+		shutdownHandler.accept(this, new HandlerException(reason, e));
 	}
 
 	private void solveMessage(ExchangeMessage obj) {
@@ -131,10 +131,10 @@ public class SocketConnector {
 			wrapper = handler.get(clazz.getSuperclass());
 		}
 		final ExchangeMessageHandle<? extends ExchangeMessage> finWrapper = wrapper;
-		MESSAGE_DISPATCHER.execute(() -> finWrapper.handle(obj));
+		MESSAGE_DISPATCHER.execute(() -> finWrapper.handle(this, obj));
 	}
 
-	public <T extends ExchangeMessage> void registerHandle(Class<T> clazz, Consumer<T> consumer) {
+	public <T extends ExchangeMessage> void registerHandle(Class<T> clazz, BiConsumer<SocketConnector, T> consumer) {
 		final ExchangeMessageHandle<T> wrapper = new ExchangeMessageHandle<T>(clazz, consumer);
 		handler.put(clazz, wrapper);
 	}

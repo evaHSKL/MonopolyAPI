@@ -18,11 +18,11 @@ class SocketTest {
 		final String serverName = "Server";
 		final String clientName = "Client";
 		try {
-			Server server = new Server(25565, serverName, (e) -> {
+			Server server = new Server(25565, serverName, (con, e) -> {
 				fail("Fehler mit Client", e);
 			});
 
-			Client client = new Client("localhost", 25565, clientName, (e) -> {
+			Client client = new Client("localhost", 25565, clientName, (con, e) -> {
 				fail("Fehler mit Server", e);
 			});
 

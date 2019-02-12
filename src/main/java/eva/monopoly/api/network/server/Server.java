@@ -3,12 +3,15 @@ package eva.monopoly.api.network.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiConsumer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import eva.monopoly.api.network.api.ExchangeMessage;
+import eva.monopoly.api.network.api.ExchangeMessageHandle;
 import eva.monopoly.api.network.api.HandlerException;
 import eva.monopoly.api.network.api.SocketConnector;
 import eva.monopoly.api.network.messages.NameInfo;
@@ -17,6 +20,8 @@ public class Server {
 	public final static Logger LOG = LoggerFactory.getLogger(Server.class);
 
 	private HashMap<String, SocketConnector> socketConnectors = new HashMap<>();
+
+	private final ConcurrentHashMap<Class<? extends ExchangeMessage>, ExchangeMessageHandle<? extends ExchangeMessage>> handler = new ConcurrentHashMap<>();
 
 	private ServerSocket serverSocket;
 
@@ -32,6 +37,7 @@ public class Server {
 						socketConnectors.put(nameInfo.getName(), client);
 						LOG.info("Client  Name: {}", nameInfo.getName());
 					});
+					handler.forEach(client::registerHandle);
 					client.establishConnection();
 					client.sendMessage(new NameInfo(name));
 				} catch (IOException e) {
@@ -68,6 +74,15 @@ public class Server {
 		return socketConnectors.get(name);
 	}
 
+	public String getSocketConnectorName(SocketConnector connector) {
+		for (Entry<String, SocketConnector> e : socketConnectors.entrySet()) {
+			if (e.getValue().equals(connector)) {
+				return e.getKey();
+			}
+		}
+		return null;
+	}
+
 	public boolean sendMessageToAll(final ExchangeMessage exchangeMessage) {
 		boolean returnValue = true;
 		for (SocketConnector connector : socketConnectors.values()) {
@@ -76,5 +91,14 @@ public class Server {
 			}
 		}
 		return returnValue;
+	}
+
+	public <T extends ExchangeMessage> void registerClientHandle(Class<T> clazz,
+			BiConsumer<SocketConnector, T> consumer) {
+		final ExchangeMessageHandle<T> wrapper = new ExchangeMessageHandle<T>(clazz, consumer);
+		for (SocketConnector con : socketConnectors.values()) {
+			con.registerHandle(clazz, wrapper);
+		}
+		handler.put(clazz, wrapper);
 	}
 }

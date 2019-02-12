@@ -138,4 +138,9 @@ public class SocketConnector {
 		final ExchangeMessageHandle<T> wrapper = new ExchangeMessageHandle<T>(clazz, consumer);
 		handler.put(clazz, wrapper);
 	}
+
+	public ExchangeMessageHandle<? extends ExchangeMessage> registerHandle(Class<? extends ExchangeMessage> key,
+			ExchangeMessageHandle<? extends ExchangeMessage> value) {
+		return handler.put(key, value);
+	}
 }

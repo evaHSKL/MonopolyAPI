@@ -83,7 +83,7 @@
 		"type": "event",
 		"action": {
 			"type": "move",
-			"taregt": "Seestrasse"
+			"target": "Seestrasse"
 		}
 	},
 	{
@@ -115,7 +115,7 @@
 		"type": "event",
 		"action": {
 			"type": "movemoneydouble",
-			"taregt": "trainstation"
+			"target": "trainstation"
 		}
 	},
 	{
@@ -123,7 +123,7 @@
 		"type": "event",
 		"action": {
 			"type": "movemoneydouble",
-			"taregt": "trainstation"
+			"target": "trainstation"
 		}
 	},
 	{

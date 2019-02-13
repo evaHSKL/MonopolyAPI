@@ -104,6 +104,16 @@ public class Server {
 		return returnValue;
 	}
 
+	public boolean sendMessageToAllExcept(final ExchangeMessage exchangeMessage, SocketConnector conExemp) {
+		boolean returnValue = true;
+		for (SocketConnector connector : socketConnectors.values()) {
+			if (connector != conExemp && !connector.sendMessage(exchangeMessage)) {
+				returnValue = false;
+			}
+		}
+		return returnValue;
+	}
+
 	public <T extends ExchangeMessage> void registerClientHandle(Class<T> clazz,
 			BiConsumer<SocketConnector, T> consumer) {
 		final ExchangeMessageHandle<T> wrapper = new ExchangeMessageHandle<T>(clazz, consumer);

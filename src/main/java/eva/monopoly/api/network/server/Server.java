@@ -66,6 +66,14 @@ public class Server {
 		serverSocket = null;
 	}
 
+	public void closeConnection(String name) {
+		try {
+			socketConnectors.get(name).closeConnection();
+			socketConnectors.remove(name);
+		} catch (IOException e) {
+		}
+	}
+
 	public HashMap<String, SocketConnector> getSocketConnectors() {
 		return socketConnectors;
 	}

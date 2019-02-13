@@ -20,6 +20,6 @@ public class PlayerStatusChanged extends ExchangeMessage {
 	}
 
 	public static enum ConnectionState {
-		CONNECTED, DISCONNECTED, RECONNECTED;
+		CONNECTED, DISCONNECTED, LOSTCONNECTION, RECONNECTED;
 	}
 }

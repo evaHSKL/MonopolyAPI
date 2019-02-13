@@ -28,15 +28,17 @@ public class Server {
 	public Server(int port, String name, BiConsumer<SocketConnector, HandlerException> shutdownHandler)
 			throws IOException {
 		try {
+			registerClientHandle(NameInfo.class, (con, nameInfo) -> {
+				socketConnectors.put(nameInfo.getName(), con);
+				LOG.info("Client  Name: {}", nameInfo.getName());
+			});
+
 			serverSocket = new ServerSocket(port);
+
 			final Runnable runnable = () -> {
 				try {
 					SocketConnector client = new SocketConnector(serverSocket.accept(), shutdownHandler);
 					LOG.info("Verbunden mit Client: {}", client.getSocket().getInetAddress().getHostAddress());
-					client.registerHandle(NameInfo.class, (con, nameInfo) -> {
-						socketConnectors.put(nameInfo.getName(), client);
-						LOG.info("Client  Name: {}", nameInfo.getName());
-					});
 					handler.forEach(client::registerHandle);
 					client.establishConnection();
 					client.sendMessage(new NameInfo(name));
@@ -44,6 +46,7 @@ public class Server {
 					LOG.error("Fehler beim verbinden mit Client!", e);
 				}
 			};
+
 			new Thread(runnable).start();
 		} catch (IOException e) {
 			LOG.error("Fehler bei der Initialisierung des Servers:", e);

@@ -13,6 +13,7 @@ public class NonBuyableMoneyStreet extends NonBuyableStreet {
 
 	@Override
 	public void action(Player p, GameBoard board, int dice) {
+		GameBoard.LOG.debug(this.getClass().getSimpleName() + " " + getName() + " was entered by " + p.getName());
 		p.modifyMoney(amount);
 	}
 

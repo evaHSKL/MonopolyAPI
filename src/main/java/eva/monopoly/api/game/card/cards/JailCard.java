@@ -12,6 +12,7 @@ public class JailCard extends Card {
 
 	@Override
 	public void action(Player p, GameBoard board) {
+		GameBoard.LOG.debug(this.getClass().getSimpleName() + " was pulled by Player " + p.getName());
 		p.sendToJail();
 	}
 }

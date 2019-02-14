@@ -44,6 +44,9 @@ public abstract class BuyableStreet extends Street {
 		p.modifyMoney(-fee);
 		streetOwner.modifyMoney(fee);
 
+		GameBoard.LOG.debug(p.getName() + " has entered " + getName() + " owned by " + streetOwner.getName()
+				+ " for a fee of " + fee);
+
 		return fee;
 	}
 

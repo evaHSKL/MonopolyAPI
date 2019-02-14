@@ -18,6 +18,7 @@ public class MoneybuildingsCard extends Card {
 
 	@Override
 	public void action(Player p, GameBoard board) {
+		GameBoard.LOG.debug(this.getClass().getSimpleName() + " was pulled by Player " + p.getName());
 		p.modifyMoney(getHouses(p, board) * houseCosts + getHotels(p, board) * hotelCosts);
 	}
 

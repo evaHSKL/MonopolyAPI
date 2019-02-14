@@ -12,6 +12,7 @@ public class UnjailCard extends Card {
 
 	@Override
 	public void action(Player p, GameBoard board) {
+		GameBoard.LOG.debug(this.getClass().getSimpleName() + " was pulled by Player " + p.getName());
 		board.pickupCard(this, p);
 	}
 }

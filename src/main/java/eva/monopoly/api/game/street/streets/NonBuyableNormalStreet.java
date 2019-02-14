@@ -11,6 +11,7 @@ public class NonBuyableNormalStreet extends NonBuyableStreet {
 
 	@Override
 	public void action(Player p, GameBoard board, int dice) {
+		GameBoard.LOG.debug(this.getClass().getSimpleName() + " " + getName() + " was entered by " + p.getName());
 	}
 
 }

@@ -14,6 +14,7 @@ public class MoneyCard extends Card {
 
 	@Override
 	public void action(Player p, GameBoard board) {
+		GameBoard.LOG.debug(this.getClass().getSimpleName() + " was pulled by Player " + p.getName());
 		p.modifyMoney(amount);
 	}
 

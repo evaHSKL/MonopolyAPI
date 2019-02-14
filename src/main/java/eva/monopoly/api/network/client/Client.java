@@ -18,31 +18,32 @@ public class Client {
 	private SocketConnector socketConnector;
 	private String remoteName;
 
-	public Client(String host, int port, String name, BiConsumer<SocketConnector, HandlerException> shutdownHandler)
+	public Client(String host, int port, String name, BiConsumer<SocketConnector, HandlerException> exceptionHandler)
 			throws UnknownHostException, IOException {
 		try {
-			SocketConnector socketConnector = new SocketConnector(new Socket(host, port), shutdownHandler);
+			LOG.info("Starting client...");
+			socketConnector = new SocketConnector(new Socket(host, port), exceptionHandler);
 			socketConnector.registerHandle(NameInfo.class, (con, nameInfo) -> {
-				this.socketConnector = socketConnector;
 				this.remoteName = nameInfo.getName();
-				LOG.info("Server Name: {}", nameInfo.getName());
+				LOG.info("Server name: {}", remoteName);
 			});
 			socketConnector.establishConnection();
 			socketConnector.sendMessage(new NameInfo(name));
 		} catch (UnknownHostException e) {
-			LOG.error("Ungültige Server Adresse: {}", host, e);
+			LOG.error("Unknown host adress: {}", host, e);
 			throw e;
 		} catch (IOException e) {
-			LOG.error("Fehler bei der Initialisierung des Servers: {}", host, e);
+			LOG.error("Error initializing the server: {}", host, e);
 			throw e;
 		}
-		LOG.info("Verbunden zu Server: {}", host);
+		LOG.info("Client started");
 	}
 
 	public void closeConnection() {
 		try {
+			LOG.info("Disconnecting from server...");
 			socketConnector.closeConnection();
-			LOG.info("Verbindung zum Server getrennt");
+			LOG.info("Connection to the server disconnected");
 		} catch (Exception e) {
 		}
 		socketConnector = null;

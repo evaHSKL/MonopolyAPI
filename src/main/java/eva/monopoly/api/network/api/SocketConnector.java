@@ -46,7 +46,7 @@ public class SocketConnector {
 		out = new ObjectOutputStream(socket.getOutputStream());
 		in = new ObjectInputStream(socket.getInputStream());
 
-		LOG.debug("Setuped Connection...");
+		LOG.debug("Setuped connection...");
 
 		final Runnable runnable = () -> {
 			LOG.debug("Start waiting for messages...");
@@ -62,10 +62,10 @@ public class SocketConnector {
 					}
 					return;
 				} catch (SocketException e) {
-					handleException("Socket wurde unerwartet geschlossen!", e);
+					handleException("Socket closed unexpectedly!", e);
 					return;
 				} catch (Exception e) {
-					handleException("Fehler beim Empfangen der Nachricht", e);
+					handleException("Error receiving a message", e);
 					return;
 				}
 			}
@@ -73,11 +73,11 @@ public class SocketConnector {
 
 		future = EXECUTOR.submit(runnable);
 
-		LOG.info("Connection Established");
+		LOG.info("Connection established");
 	}
 
 	public void closeConnection() throws IOException {
-		LOG.info("Closing Connection");
+		LOG.info("Closing connection");
 
 		out.flush();
 		future.cancel(true);
@@ -85,7 +85,7 @@ public class SocketConnector {
 		in.close();
 		socket.close();
 
-		LOG.info("Connection Closed");
+		LOG.info("Connection closed");
 	}
 
 	public Socket getSocket() {
@@ -94,20 +94,20 @@ public class SocketConnector {
 
 	public boolean sendMessage(final ExchangeMessage exchangeMessage) {
 		try {
-			LOG.debug("Waiting for sending Message");
+			LOG.debug("Waiting for sending message");
 			synchronized (out) {
 				out.writeObject(exchangeMessage);
 				LOG.debug("Send Message of type: {}", exchangeMessage.getClass().getSimpleName());
 			}
 			return true;
 		} catch (Exception e) {
-			handleException("Konnte Nachricht nicht senden!", e);
+			handleException("Could not send message!", e);
 		}
 		return false;
 	}
 
 	private void handleException(String reason, Throwable e) {
-		LOG.debug("Handling an Exception while Sending or Receiving a Message...", e);
+		LOG.debug("Handling an exception from sending or receiving a message...", e);
 		exceptionHandler.accept(this, new HandlerException(reason, e));
 		LOG.debug("Exception was handled", e);
 	}

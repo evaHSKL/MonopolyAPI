@@ -25,48 +25,51 @@ public class Server {
 
 	private ServerSocket serverSocket;
 
-	public Server(int port, String name, BiConsumer<SocketConnector, HandlerException> shutdownHandler)
+	public Server(int port, String name, BiConsumer<SocketConnector, HandlerException> exceptionHandler)
 			throws IOException {
 		try {
+			LOG.info("Starting server...");
 			registerClientHandle(NameInfo.class, (con, nameInfo) -> {
 				socketConnectors.put(nameInfo.getName(), con);
-				LOG.info("Client  Name: {}", nameInfo.getName());
+				LOG.info("Client  name: {}", nameInfo.getName());
 			});
 
 			serverSocket = new ServerSocket(port);
 
+			LOG.debug("Starting client runnable...");
 			final Runnable runnable = () -> {
 				try {
-					SocketConnector client = new SocketConnector(serverSocket.accept(), shutdownHandler);
-					LOG.info("Verbunden mit Client: {}", client.getSocket().getInetAddress().getHostAddress());
+					SocketConnector client = new SocketConnector(serverSocket.accept(), exceptionHandler);
+					LOG.info("Client connected: {}", client.getSocket().getInetAddress().getHostAddress());
 					handler.forEach(client::registerHandle);
 					client.establishConnection();
 					client.sendMessage(new NameInfo(name));
 				} catch (IOException e) {
-					LOG.error("Fehler beim verbinden mit Client!", e);
+					LOG.error("Error initializing the client", e);
 				}
 			};
-
 			new Thread(runnable).start();
 		} catch (IOException e) {
-			LOG.error("Fehler bei der Initialisierung des Servers:", e);
+			LOG.error("Error initializing the server", e);
 			throw e;
 		}
-		LOG.info("Server gestartet");
+		LOG.info("Server started");
 	}
 
 	public void closeConnection() {
 		try {
+			LOG.info("Disconnecting all clients...");
 			for (String connector : socketConnectors.keySet()) {
 				socketConnectors.get(connector).closeConnection();
 				LOG.info("Verbindung zu {} getrennt", connector);
 				socketConnectors.remove(connector);
 			}
+			LOG.info("Connection to all clients disconnected");
 			serverSocket.close();
-			LOG.info("Verbindung zu allen Clients getrennt");
 		} catch (Exception e) {
 		}
 		serverSocket = null;
+		LOG.info("Server closed");
 	}
 
 	public void closeConnection(String name) {

@@ -27,43 +27,29 @@ public class SocketConnector {
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
 	private Future<?> future;
-	private BiConsumer<SocketConnector, HandlerException> shutdownHandler;
+	private BiConsumer<SocketConnector, HandlerException> exceptionHandler;
 
 	private final ConcurrentHashMap<Class<? extends ExchangeMessage>, ExchangeMessageHandle<? extends ExchangeMessage>> handler = new ConcurrentHashMap<>();
 
-	public SocketConnector(final Socket socket, BiConsumer<SocketConnector, HandlerException> shutdownHandler) {
+	public SocketConnector(final Socket socket, BiConsumer<SocketConnector, HandlerException> exceptionHandler) {
 		this.socket = socket;
-		this.shutdownHandler = shutdownHandler;
+		this.exceptionHandler = exceptionHandler;
 
 		registerHandle(ExchangeMessage.class, (con, msg) -> LOG.warn("There was an unhandled message of type {}: {}",
 				msg.getClass().getSimpleName(), msg.toString()));
 	}
 
-	public void establishConnection() {
-		try {
+	public void establishConnection() throws IOException {
+		LOG.info("Establish Connection...");
 
-			this.socket.setSoTimeout(TIMEOUT);
-		} catch (SocketException e) {
-			shutdownConnection("Konnte SoTimeout nicht setzen!", e);
-			return;
-		}
+		this.socket.setSoTimeout(TIMEOUT);
+		out = new ObjectOutputStream(socket.getOutputStream());
+		in = new ObjectInputStream(socket.getInputStream());
 
-		try {
-			out = new ObjectOutputStream(socket.getOutputStream());
-		} catch (IOException e) {
-			shutdownConnection("Outputstream konnte nicht initialisiert werden!", e);
-			return;
-		}
-
-		try {
-			in = new ObjectInputStream(socket.getInputStream());
-		} catch (IOException e) {
-			shutdownConnection("Inputstream konnte nicht initialisiert werden!", e);
-			return;
-		}
+		LOG.debug("Setuped Connection...");
 
 		final Runnable runnable = () -> {
-			LOG.debug("Start waiting for messages");
+			LOG.debug("Start waiting for messages...");
 			while (!future.isCancelled()) {
 				try {
 					final Object obj = in.readObject();
@@ -72,28 +58,34 @@ public class SocketConnector {
 				} catch (InterruptedIOException e) {
 					if (!future.isCancelled()) {
 						future.cancel(false);
-						shutdownConnection("Unexpected interrupt", e);
+						handleException("Unexpected interrupt", e);
 					}
 					return;
 				} catch (SocketException e) {
-					shutdownConnection("Socket wurde unerwartet geschlossen!", e);
+					handleException("Socket wurde unerwartet geschlossen!", e);
 					return;
 				} catch (Exception e) {
-					shutdownConnection("Fehler beim Empfangen der Nachricht", e);
+					handleException("Fehler beim Empfangen der Nachricht", e);
 					return;
 				}
 			}
 		};
 
 		future = EXECUTOR.submit(runnable);
+
+		LOG.info("Connection Established");
 	}
 
 	public void closeConnection() throws IOException {
+		LOG.info("Closing Connection");
+
 		out.flush();
 		future.cancel(true);
 		out.close();
 		in.close();
 		socket.close();
+
+		LOG.info("Connection Closed");
 	}
 
 	public Socket getSocket() {
@@ -109,13 +101,15 @@ public class SocketConnector {
 			}
 			return true;
 		} catch (Exception e) {
-			shutdownConnection("Konnte Nachricht nicht senden!", e);
+			handleException("Konnte Nachricht nicht senden!", e);
 		}
 		return false;
 	}
 
-	private void shutdownConnection(String reason, Throwable e) {
-		shutdownHandler.accept(this, new HandlerException(reason, e));
+	private void handleException(String reason, Throwable e) {
+		LOG.debug("Handling an Exception while Sending or Receiving a Message...", e);
+		exceptionHandler.accept(this, new HandlerException(reason, e));
+		LOG.debug("Exception was handled", e);
 	}
 
 	private void solveMessage(ExchangeMessage obj) {

@@ -22,7 +22,7 @@ public class Client {
 			throws UnknownHostException, IOException {
 		try {
 			LOG.info("Starting client...");
-			socketConnector = new SocketConnector(new Socket(host, port), exceptionHandler);
+			socketConnector = new SocketConnector(LOG, new Socket(host, port), exceptionHandler);
 			socketConnector.registerHandle(NameInfo.class, (con, nameInfo) -> {
 				this.remoteName = nameInfo.getName();
 				LOG.info("Server name: {}", remoteName);

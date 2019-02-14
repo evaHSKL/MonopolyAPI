@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import eva.monopoly.api.game.GameBoard;
 import eva.monopoly.api.game.street.streets.BuyableFactoryStreet;
 import eva.monopoly.api.game.street.streets.BuyableNormalStreet;
 import eva.monopoly.api.game.street.streets.BuyableStreet;
@@ -21,6 +22,7 @@ import eva.monopoly.api.utils.ResourceReaderUtil;
 
 public class Streets {
 	public static ArrayList<Street> loadStreets() {
+		GameBoard.LOG.debug("Loading Streets from File...");
 		ArrayList<Street> streets = new ArrayList<>();
 		try {
 			Path path = ResourceReaderUtil.getResourcePath("monopoly/resources/Streets.json");
@@ -29,6 +31,8 @@ public class Streets {
 		} catch (URISyntaxException | IOException | IllegalArgumentException e) {
 			e.printStackTrace();
 		}
+
+		GameBoard.LOG.debug("Loaded Streets");
 		return streets;
 	}
 
@@ -40,11 +44,14 @@ public class Streets {
 			String value = streetorder.get(String.valueOf(i)).getAsString();
 			String[] args = value.split(":");
 			int index = Integer.valueOf(args[1]);
+			Street street = null;
 			if ("specialstreets".equals(args[0])) {
-				streets.add(loadNonBuyableStreet(objSpecialstreets.get(index).getAsJsonObject()));
+				street = loadNonBuyableStreet(objSpecialstreets.get(index).getAsJsonObject());
 			} else if ("street".equals(args[0])) {
-				streets.add(loadBuyableStreet(objStreets.get(index).getAsJsonObject()));
+				street = loadBuyableStreet(objStreets.get(index).getAsJsonObject());
 			}
+			GameBoard.LOG.debug("Street '" + street.getName() + "' loaded");
+			streets.add(street);
 		}
 	}
 

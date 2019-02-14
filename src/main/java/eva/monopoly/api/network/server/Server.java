@@ -31,7 +31,7 @@ public class Server {
 			LOG.info("Starting server...");
 			registerClientHandle(NameInfo.class, (con, nameInfo) -> {
 				socketConnectors.put(nameInfo.getName(), con);
-				LOG.info("Client  name: {}", nameInfo.getName());
+				LOG.info("Client name: {}", nameInfo.getName());
 			});
 
 			serverSocket = new ServerSocket(port);
@@ -39,7 +39,7 @@ public class Server {
 			LOG.debug("Starting client runnable...");
 			final Runnable runnable = () -> {
 				try {
-					SocketConnector client = new SocketConnector(serverSocket.accept(), exceptionHandler);
+					SocketConnector client = new SocketConnector(LOG, serverSocket.accept(), exceptionHandler);
 					LOG.info("Client connected: {}", client.getSocket().getInetAddress().getHostAddress());
 					handler.forEach(client::registerHandle);
 					client.establishConnection();

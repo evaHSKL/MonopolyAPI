@@ -13,16 +13,15 @@ import java.util.concurrent.Future;
 import java.util.function.BiConsumer;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class SocketConnector {
-	public final static Logger LOG = LoggerFactory.getLogger(SocketConnector.class);
 	public final static int STD_PORT = 25566;
 
 	final private static ExecutorService EXECUTOR = Executors.newCachedThreadPool();
 	final private static ExecutorService MESSAGE_DISPATCHER = Executors.newSingleThreadExecutor();
 	final private static int TIMEOUT = 15 * 1000;
 
+	public Logger log;
 	private final Socket socket;
 	private ObjectOutputStream out;
 	private ObjectInputStream in;
@@ -31,29 +30,31 @@ public class SocketConnector {
 
 	private final ConcurrentHashMap<Class<? extends ExchangeMessage>, ExchangeMessageHandle<? extends ExchangeMessage>> handler = new ConcurrentHashMap<>();
 
-	public SocketConnector(final Socket socket, BiConsumer<SocketConnector, HandlerException> exceptionHandler) {
+	public SocketConnector(final Logger log, final Socket socket,
+			BiConsumer<SocketConnector, HandlerException> exceptionHandler) {
+		this.log = log;
 		this.socket = socket;
 		this.exceptionHandler = exceptionHandler;
 
-		registerHandle(ExchangeMessage.class, (con, msg) -> LOG.warn("There was an unhandled message of type {}: {}",
+		registerHandle(ExchangeMessage.class, (con, msg) -> log.warn("There was an unhandled message of type {}: {}",
 				msg.getClass().getSimpleName(), msg.toString()));
 	}
 
 	public void establishConnection() throws IOException {
-		LOG.info("Establish Connection...");
+		log.info("Establish Connection...");
 
 		this.socket.setSoTimeout(TIMEOUT);
 		out = new ObjectOutputStream(socket.getOutputStream());
 		in = new ObjectInputStream(socket.getInputStream());
 
-		LOG.debug("Setuped connection...");
+		log.debug("Setuped connection...");
 
 		final Runnable runnable = () -> {
-			LOG.debug("Start waiting for messages...");
+			log.debug("Start waiting for messages...");
 			while (!future.isCancelled()) {
 				try {
 					final Object obj = in.readObject();
-					LOG.debug("Received message of type: {}", obj.getClass().getSimpleName());
+					log.debug("Received message of type: {}", obj.getClass().getSimpleName());
 					solveMessage((ExchangeMessage) obj);
 				} catch (InterruptedIOException e) {
 					if (!future.isCancelled()) {
@@ -73,11 +74,11 @@ public class SocketConnector {
 
 		future = EXECUTOR.submit(runnable);
 
-		LOG.info("Connection established");
+		log.info("Connection established");
 	}
 
 	public void closeConnection() throws IOException {
-		LOG.info("Closing connection");
+		log.info("Closing connection");
 
 		out.flush();
 		future.cancel(true);
@@ -85,7 +86,7 @@ public class SocketConnector {
 		in.close();
 		socket.close();
 
-		LOG.info("Connection closed");
+		log.info("Connection closed");
 	}
 
 	public Socket getSocket() {
@@ -94,10 +95,10 @@ public class SocketConnector {
 
 	public boolean sendMessage(final ExchangeMessage exchangeMessage) {
 		try {
-			LOG.debug("Waiting for sending message");
+			log.debug("Waiting for sending message");
 			synchronized (out) {
 				out.writeObject(exchangeMessage);
-				LOG.debug("Send Message of type: {}", exchangeMessage.getClass().getSimpleName());
+				log.debug("Send Message of type: {}", exchangeMessage.getClass().getSimpleName());
 			}
 			return true;
 		} catch (Exception e) {
@@ -107,9 +108,9 @@ public class SocketConnector {
 	}
 
 	private void handleException(String reason, Throwable e) {
-		LOG.debug("Handling an exception from sending or receiving a message...", e);
+		log.debug("Handling an exception from sending or receiving a message...", e);
 		exceptionHandler.accept(this, new HandlerException(reason, e));
-		LOG.debug("Exception was handled", e);
+		log.debug("Exception was handled", e);
 	}
 
 	private void solveMessage(ExchangeMessage obj) {
@@ -118,7 +119,7 @@ public class SocketConnector {
 		while (wrapper == null) {
 			clazz = clazz.getSuperclass();
 			if (clazz == null) {
-				LOG.error("No handler registered for type hierarchy of class: {}. This should never happen!",
+				log.error("No handler registered for type hierarchy of class: {}. This should never happen!",
 						obj.getClass().getSimpleName());
 				return;
 			}

@@ -7,6 +7,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import eva.monopoly.api.game.card.Card;
 import eva.monopoly.api.game.card.Cards;
 import eva.monopoly.api.game.card.cards.UnjailCard;
@@ -17,6 +20,7 @@ import eva.monopoly.api.game.street.streets.BuyableStreet;
 import eva.monopoly.api.game.street.streets.NonBuyableStreet;
 
 public class GameBoard {
+	public final static Logger LOG = LoggerFactory.getLogger(GameBoard.class);
 	public final static Random RAND = new Random();
 
 	private final List<Player> players;

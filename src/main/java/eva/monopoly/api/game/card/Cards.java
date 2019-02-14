@@ -11,6 +11,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import eva.monopoly.api.game.GameBoard;
 import eva.monopoly.api.game.card.Card.CardType;
 import eva.monopoly.api.game.card.cards.JailCard;
 import eva.monopoly.api.game.card.cards.MoneyCard;
@@ -25,6 +26,7 @@ import eva.monopoly.api.utils.ResourceReaderUtil;
 public class Cards {
 
 	public static Entry<ArrayList<Card>, ArrayList<Card>> loadCards() {
+		GameBoard.LOG.debug("Loading Cards from File...");
 		ArrayList<Card> eventCards = new ArrayList<>();
 		ArrayList<Card> communityCards = new ArrayList<>();
 		try {
@@ -34,6 +36,8 @@ public class Cards {
 		} catch (URISyntaxException | IOException | IllegalArgumentException e) {
 			e.printStackTrace();
 		}
+
+		GameBoard.LOG.debug("Loaded Cards");
 		return new AbstractMap.SimpleEntry<>(eventCards, communityCards);
 	}
 
@@ -45,9 +49,11 @@ public class Cards {
 			Card card = loadCard(obj);
 			switch (card.getType()) {
 			case EVENT:
+				GameBoard.LOG.debug("Eventcard '" + card.getText() + "' loaded");
 				eventCards.add(card);
 				break;
 			case COMMUNITY:
+				GameBoard.LOG.debug("Cummunitycard '" + card.getText() + "' loaded");
 				communityCards.add(card);
 				break;
 			}

@@ -88,7 +88,9 @@ public class SocketConnector {
 	}
 
 	public void closeConnection() throws IOException {
-		sendMessage(new ConnectionClose());
+		if (!socket.isClosed()) {
+			sendMessage(new ConnectionClose());
+		}
 		log.info("Closing connection");
 
 		out.flush();

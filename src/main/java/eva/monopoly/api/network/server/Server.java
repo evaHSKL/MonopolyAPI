@@ -26,6 +26,7 @@ public class Server {
 	private final ConcurrentHashMap<Class<? extends ExchangeMessage>, ExchangeMessageHandle<? extends ExchangeMessage>> handler = new ConcurrentHashMap<>();
 
 	private ServerSocket serverSocket;
+	private Thread clientThread;
 
 	public Server(int port, String name, BiConsumer<SocketConnector, HandlerException> exceptionHandler)
 			throws IOException {
@@ -54,8 +55,7 @@ public class Server {
 					}
 				}
 			};
-			Thread clientThread = new Thread(clientRunnable, "ClientRunnable");
-			clientThread.setDaemon(true);
+			clientThread = new Thread(clientRunnable, "ClientRunnable");
 			clientThread.start();
 			final Runnable heartbeatRunnable = () -> {
 				while (!Thread.currentThread().isInterrupted()) {
@@ -77,6 +77,7 @@ public class Server {
 	}
 
 	public void closeConnection() {
+		clientThread.interrupt();
 		try {
 			LOG.info("Disconnecting all clients...");
 			for (String connector : socketConnectors.keySet()) {

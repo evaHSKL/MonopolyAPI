@@ -68,10 +68,6 @@ public class Player {
 		return jailed;
 	}
 
-	public static enum Pawn {
-		TOPHAT, THIMBLE, IRON, SHOE, BATTLESHIP, WHEELBARROW, DOG, CAR;
-	}
-
 	public List<BuyableStreet> getStreets() {
 		return streets;
 	}
@@ -114,5 +110,9 @@ public class Player {
 	public void transferCard(Player p, Card card, int money) {
 		transferCard(p, card);
 		p.transferMoney(this, money);
+	}
+
+	public static enum Pawn {
+		TOPHAT, THIMBLE, IRON, SHOE, BATTLESHIP, WHEELBARROW, DOG, CAR;
 	}
 }

@@ -25,5 +25,4 @@ public class PawnChanged extends ExchangeMessage {
 	public Pawn getPawn() {
 		return pawn;
 	}
-
 }

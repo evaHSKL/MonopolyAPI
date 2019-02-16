@@ -1,9 +1,9 @@
 package eva.monopoly.api.game.street.streets;
 
-import eva.monopoly.api.game.GameBoard;
 import eva.monopoly.api.game.player.Player;
+import eva.monopoly.api.game.street.BuyableStreet;
 
-public class BuyableTrainstationStreet extends BuyableStreet {
+public abstract class BuyableTrainstationStreet extends BuyableStreet {
 
 	public int onestation;
 	public int twostations;
@@ -36,8 +36,8 @@ public class BuyableTrainstationStreet extends BuyableStreet {
 	}
 
 	@Override
-	protected int getFee(Player p, GameBoard board, int dice) {
-		switch (getStreetGroup(p, board, getGroup()).size()) {
+	protected int getFee(Player p, int dice) {
+		switch (getStreetGroup(p, getGroup()).size()) {
 		case 1:
 			return onestation;
 		case 2:

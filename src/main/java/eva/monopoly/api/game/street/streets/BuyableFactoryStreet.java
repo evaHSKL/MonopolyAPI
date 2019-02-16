@@ -1,9 +1,9 @@
 package eva.monopoly.api.game.street.streets;
 
-import eva.monopoly.api.game.GameBoard;
 import eva.monopoly.api.game.player.Player;
+import eva.monopoly.api.game.street.BuyableStreet;
 
-public class BuyableFactoryStreet extends BuyableStreet {
+public abstract class BuyableFactoryStreet extends BuyableStreet {
 
 	private int factorsingle;
 	private int factorgroup;
@@ -24,8 +24,8 @@ public class BuyableFactoryStreet extends BuyableStreet {
 	}
 
 	@Override
-	protected int getFee(Player p, GameBoard board, int dice) {
-		if (hasStreetGroup(p, board, getGroup())) {
+	protected int getFee(Player p, int dice) {
+		if (hasStreetGroup(p, getGroup())) {
 			return factorgroup * dice;
 		}
 		return factorsingle * dice;

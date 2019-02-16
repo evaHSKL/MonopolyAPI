@@ -1,5 +1,7 @@
 package eva.monopoly.api.game.street;
 
+import eva.monopoly.api.game.player.Player;
+
 public abstract class Street {
 	private String name;
 
@@ -10,4 +12,6 @@ public abstract class Street {
 	public String getName() {
 		return name;
 	}
+
+	public abstract void action(Player p, int dice, int modifier);
 }

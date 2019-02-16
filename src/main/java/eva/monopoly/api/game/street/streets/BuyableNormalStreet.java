@@ -2,10 +2,10 @@ package eva.monopoly.api.game.street.streets;
 
 import java.util.List;
 
-import eva.monopoly.api.game.GameBoard;
 import eva.monopoly.api.game.player.Player;
+import eva.monopoly.api.game.street.BuyableStreet;
 
-public class BuyableNormalStreet extends BuyableStreet {
+public abstract class BuyableNormalStreet extends BuyableStreet {
 
 	private int nohouse;
 	private int onehouse;
@@ -61,12 +61,11 @@ public class BuyableNormalStreet extends BuyableStreet {
 		return houses;
 	}
 
-	public boolean addHouse(GameBoard board) {
-		Player p = board.getBuyableStreets().get(this);
-		if (!hasStreetGroup(p, board, getGroup())) {
+	public boolean addHouse(Player p) {
+		if (!hasStreetGroup(p, getGroup())) {
 			return false;
 		}
-		List<BuyableStreet> streets = getStreetGroup(p, board, getGroup());
+		List<BuyableStreet> streets = getStreetGroup(p, getGroup());
 		for (BuyableStreet s : streets) {
 			if (((BuyableNormalStreet) s).houses < houses) {
 				return false;
@@ -77,7 +76,7 @@ public class BuyableNormalStreet extends BuyableStreet {
 	}
 
 	@Override
-	protected int getFee(Player p, GameBoard board, int dice) {
+	protected int getFee(Player p, int dice) {
 		switch (houses) {
 		case 0:
 			return nohouse;

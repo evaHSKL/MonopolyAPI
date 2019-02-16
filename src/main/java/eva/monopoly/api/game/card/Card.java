@@ -1,6 +1,5 @@
 package eva.monopoly.api.game.card;
 
-import eva.monopoly.api.game.GameBoard;
 import eva.monopoly.api.game.player.Player;
 
 public abstract class Card {
@@ -20,7 +19,7 @@ public abstract class Card {
 		return type;
 	}
 
-	public abstract void action(Player p, GameBoard board);
+	public abstract void action(Player p);
 
 	public static enum CardType {
 		EVENT, COMMUNITY;

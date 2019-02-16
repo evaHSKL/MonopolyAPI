@@ -1,5 +1,9 @@
 package eva.monopoly.api.game.player;
 
+import java.util.List;
+
+import eva.monopoly.api.game.street.BuyableStreet;
+
 public class Player {
 	private static final int START_MONEY = 1500;
 	private static final int START_POS = 0;
@@ -61,5 +65,9 @@ public class Player {
 
 	public static enum Pawn {
 		TOPHAT, THIMBLE, IRON, SHOE, BATTLESHIP, WHEELBARROW, DOG, CAR;
+	}
+
+	public List<BuyableStreet> getStreets() {
+		return null;
 	}
 }

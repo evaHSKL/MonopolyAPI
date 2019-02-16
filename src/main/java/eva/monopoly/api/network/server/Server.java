@@ -66,7 +66,7 @@ public class Server {
 					}
 				}
 			};
-			Thread heartbeatThread = new Thread(heartbeatRunnable);
+			Thread heartbeatThread = new Thread(heartbeatRunnable, "Heartbeat");
 			heartbeatThread.setDaemon(true);
 			heartbeatThread.start();
 		} catch (IOException e) {

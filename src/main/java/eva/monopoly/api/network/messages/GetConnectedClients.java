@@ -1,6 +1,6 @@
 package eva.monopoly.api.network.messages;
 
-import java.util.List;
+import java.util.Map;
 
 import eva.monopoly.api.game.player.Player.Pawn;
 import eva.monopoly.api.network.api.ExchangeMessage;
@@ -8,19 +8,19 @@ import eva.monopoly.api.network.api.ExchangeMessage;
 public class GetConnectedClients extends ExchangeMessage {
 	private static final long serialVersionUID = 5455503451578318408L;
 
-	private final List<Client> clients;
+	private final Map<String, Client> clients;
 
 	public GetConnectedClients(String name) {
 		super(name);
 		this.clients = null;
 	}
 
-	public GetConnectedClients(String name, List<Client> clients) {
-		super(name);
+	public GetConnectedClients(Map<String, Client> clients) {
+		super(null);
 		this.clients = clients;
 	}
 
-	public List<Client> getClients() {
+	public Map<String, Client> getClients() {
 		return clients;
 	}
 

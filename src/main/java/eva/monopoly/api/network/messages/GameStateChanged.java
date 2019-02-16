@@ -7,6 +7,11 @@ public class GameStateChanged extends ExchangeMessage {
 
 	private final GameState gameState;
 
+	public GameStateChanged(GameState gameState) {
+		super(null);
+		this.gameState = gameState;
+	}
+
 	public GameStateChanged(String name, GameState gameState) {
 		super(name);
 		this.gameState = gameState;

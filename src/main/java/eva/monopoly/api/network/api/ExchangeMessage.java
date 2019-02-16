@@ -9,10 +9,6 @@ public abstract class ExchangeMessage implements Serializable {
 		this.name = name;
 	}
 
-	public ExchangeMessage() {
-		this.name = null;
-	}
-
 	public String getName() {
 		return name;
 	}

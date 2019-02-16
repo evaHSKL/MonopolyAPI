@@ -10,8 +10,8 @@ public class CardPulled extends ExchangeMessage {
 	private final Card card;
 	private final OptionalInt moneyAmount;
 
-	public CardPulled(Card card, OptionalInt moneyAmount) {
-		super();
+	public CardPulled(String name, Card card, OptionalInt moneyAmount) {
+		super(name);
 		this.card = card;
 		this.moneyAmount = moneyAmount;
 	}

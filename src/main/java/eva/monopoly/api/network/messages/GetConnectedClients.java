@@ -10,6 +10,11 @@ public class GetConnectedClients extends ExchangeMessage {
 
 	private final List<Client> clients;
 
+	public GetConnectedClients(String name) {
+		super(name);
+		this.clients = null;
+	}
+
 	public GetConnectedClients(String name, List<Client> clients) {
 		super(name);
 		this.clients = clients;

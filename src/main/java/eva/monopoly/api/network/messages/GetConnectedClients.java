@@ -1,5 +1,6 @@
 package eva.monopoly.api.network.messages;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import eva.monopoly.api.game.player.Player.Pawn;
@@ -24,7 +25,9 @@ public class GetConnectedClients extends ExchangeMessage {
 		return clients;
 	}
 
-	public static class Client {
+	public static class Client implements Serializable {
+		private static final long serialVersionUID = -2650884723373709695L;
+
 		private boolean ready;
 		private Pawn playerPawn;
 

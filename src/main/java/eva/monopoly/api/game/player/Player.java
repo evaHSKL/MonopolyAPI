@@ -76,23 +76,43 @@ public class Player {
 		return streets;
 	}
 
-	public boolean add(BuyableStreet e) {
+	public boolean addStreet(BuyableStreet e) {
 		return streets.add(e);
 	}
 
-	public boolean remove(BuyableStreet o) {
+	public boolean removeStreet(BuyableStreet o) {
 		return streets.remove(o);
+	}
+
+	public void transferStreet(Player p, BuyableStreet street) {
+		removeStreet(street);
+		p.addStreet(street);
+	}
+
+	public void transferStreet(Player p, BuyableStreet street, int money) {
+		transferStreet(p, street);
+		p.transferMoney(this, money);
 	}
 
 	public List<Card> getCards() {
 		return cards;
 	}
 
-	public boolean add(Card e) {
+	public boolean addCard(Card e) {
 		return cards.add(e);
 	}
 
-	public boolean remove(Card o) {
+	public boolean removeCard(Card o) {
 		return cards.remove(o);
+	}
+
+	public void transferCard(Player p, Card card) {
+		removeCard(card);
+		p.addCard(card);
+	}
+
+	public void transferCard(Player p, Card card, int money) {
+		transferCard(p, card);
+		p.transferMoney(this, money);
 	}
 }

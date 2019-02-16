@@ -1,4 +1,4 @@
-package eva.monopoly.api.network.messages;
+package eva.monopoly.api.network.api.messages;
 
 import eva.monopoly.api.network.api.ExchangeMessage;
 

@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import eva.monopoly.api.network.api.HandlerException;
 import eva.monopoly.api.network.api.SocketConnector;
-import eva.monopoly.api.network.messages.NameInfo;
+import eva.monopoly.api.network.api.messages.NameInfo;
 
 public class Client {
 	public final static Logger LOG = LoggerFactory.getLogger(Client.class);

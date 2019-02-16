@@ -5,6 +5,7 @@ import eva.monopoly.api.network.api.ExchangeMessage;
 
 public class PawnChanged extends ExchangeMessage {
 	private static final long serialVersionUID = 8895165723315803824L;
+
 	private final Pawn pawn;
 
 	public PawnChanged(String name, Pawn pawn) {

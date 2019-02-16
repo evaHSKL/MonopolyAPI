@@ -14,7 +14,7 @@ import eva.monopoly.api.network.api.ExchangeMessage;
 import eva.monopoly.api.network.api.ExchangeMessageHandle;
 import eva.monopoly.api.network.api.HandlerException;
 import eva.monopoly.api.network.api.SocketConnector;
-import eva.monopoly.api.network.messages.NameInfo;
+import eva.monopoly.api.network.api.messages.NameInfo;
 
 public class Server {
 	public final static Logger LOG = LoggerFactory.getLogger(Server.class);

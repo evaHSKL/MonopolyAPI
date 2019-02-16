@@ -1,7 +1,9 @@
 package eva.monopoly.api.game.player;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import eva.monopoly.api.game.card.Card;
 import eva.monopoly.api.game.street.BuyableStreet;
 
 public class Player {
@@ -12,6 +14,8 @@ public class Player {
 	private Pawn playerPawn;
 	private boolean jailed;
 	private int positionIndex;
+	private List<BuyableStreet> streets;
+	private List<Card> cards;
 
 	public Player(String name, Pawn playerPawn) {
 		money = START_MONEY;
@@ -19,6 +23,7 @@ public class Player {
 		this.name = name;
 		this.playerPawn = playerPawn;
 		jailed = false;
+		streets = new ArrayList<BuyableStreet>();
 	}
 
 	public Pawn getPawn() {
@@ -68,6 +73,26 @@ public class Player {
 	}
 
 	public List<BuyableStreet> getStreets() {
-		return null;
+		return streets;
+	}
+
+	public boolean add(BuyableStreet e) {
+		return streets.add(e);
+	}
+
+	public boolean remove(BuyableStreet o) {
+		return streets.remove(o);
+	}
+
+	public List<Card> getCards() {
+		return cards;
+	}
+
+	public boolean add(Card e) {
+		return cards.add(e);
+	}
+
+	public boolean remove(Card o) {
+		return cards.remove(o);
 	}
 }

@@ -34,6 +34,9 @@ class SocketTest {
 
 			assertNotNull(server.getSocketConnector(clientName));
 			assertEquals(client.getRemoteName(), serverName);
+
+			server.closeConnection();
+			client.closeConnection();
 		} catch (IOException e) {
 			fail("Fehler beim Erstellen", e);
 		}

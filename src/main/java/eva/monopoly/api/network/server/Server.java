@@ -2,6 +2,7 @@ package eva.monopoly.api.network.server;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.SocketException;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
@@ -50,6 +51,8 @@ public class Server {
 						handler.forEach(client::registerHandle);
 						client.establishConnection();
 						client.sendMessage(new NameInfo(name));
+					} catch (SocketException e) {
+						break;
 					} catch (IOException e) {
 						LOG.error("Error initializing the client", e);
 					}
@@ -78,14 +81,18 @@ public class Server {
 
 	public void closeConnection() {
 		clientThread.interrupt();
-		try {
-			LOG.info("Disconnecting all clients...");
-			for (String connector : socketConnectors.keySet()) {
-				socketConnectors.get(connector).closeConnection();
-				LOG.info("Verbindung zu {} getrennt", connector);
-				socketConnectors.remove(connector);
+		LOG.info("Disconnecting all clients...");
+		for (Entry<String, SocketConnector> connector : socketConnectors.entrySet()) {
+			try {
+				connector.getValue().closeConnection();
+				LOG.info("Connection to {} closed", connector.getKey());
+			} catch (Exception e) {
+				LOG.info("Connection to {} could not be closed", connector.getKey());
 			}
-			LOG.info("Connection to all clients disconnected");
+		}
+		socketConnectors.clear();
+		LOG.info("Connection to all clients disconnected");
+		try {
 			serverSocket.close();
 		} catch (Exception e) {
 		}

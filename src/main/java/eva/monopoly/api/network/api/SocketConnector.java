@@ -1,5 +1,6 @@
 package eva.monopoly.api.network.api;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.io.ObjectInputStream;
@@ -13,6 +14,8 @@ import java.util.concurrent.Future;
 import java.util.function.BiConsumer;
 
 import org.slf4j.Logger;
+
+import eva.monopoly.api.network.api.messages.ConnectionClose;
 
 public class SocketConnector {
 	public final static int STD_PORT = 25566;
@@ -38,6 +41,7 @@ public class SocketConnector {
 
 		registerHandle(ExchangeMessage.class, (con, msg) -> log.warn("There was an unhandled message of type {}: {}",
 				msg.getClass().getSimpleName(), msg.toString()));
+		registerHandle(ConnectionClose.class, (con, conClose) -> future.cancel(false));
 	}
 
 	public void establishConnection() throws IOException {
@@ -63,8 +67,14 @@ public class SocketConnector {
 					}
 					return;
 				} catch (SocketException e) {
+					if (future.isCancelled()) {
+						break;
+					}
 					handleException("Socket closed unexpectedly!", e);
+
 					return;
+				} catch (EOFException e) {
+
 				} catch (Exception e) {
 					handleException("Error receiving a message", e);
 					return;
@@ -78,6 +88,7 @@ public class SocketConnector {
 	}
 
 	public void closeConnection() throws IOException {
+		sendMessage(new ConnectionClose());
 		log.info("Closing connection");
 
 		out.flush();

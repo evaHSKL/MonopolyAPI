@@ -17,6 +17,6 @@ public class GameStateChanged extends ExchangeMessage {
 	}
 
 	public static enum GameState {
-		PREGAME, READY, INGAME, FINISED;
+		PREGAME, READY, INGAME, FINISHED;
 	}
 }

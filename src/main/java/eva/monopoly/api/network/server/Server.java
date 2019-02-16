@@ -41,19 +41,23 @@ public class Server {
 			serverSocket = new ServerSocket(port);
 
 			LOG.debug("Starting client runnable...");
-			final Runnable runnable = () -> {
-				try {
-					SocketConnector client = new SocketConnector(LOG, serverSocket.accept(), exceptionHandler);
-					LOG.info("Client connected: {}", client.getSocket().getInetAddress().getHostAddress());
-					handler.forEach(client::registerHandle);
-					client.establishConnection();
-					client.sendMessage(new NameInfo(name));
-				} catch (IOException e) {
-					LOG.error("Error initializing the client", e);
+			final Runnable clientRunnable = () -> {
+				while (!Thread.currentThread().isInterrupted()) {
+					try {
+						SocketConnector client = new SocketConnector(LOG, serverSocket.accept(), exceptionHandler);
+						LOG.info("Client connected: {}", client.getSocket().getInetAddress().getHostAddress());
+						handler.forEach(client::registerHandle);
+						client.establishConnection();
+						client.sendMessage(new NameInfo(name));
+					} catch (IOException e) {
+						LOG.error("Error initializing the client", e);
+					}
 				}
 			};
-			new Thread(runnable).start();
-			final Runnable heartbeat = () -> {
+			Thread clientThread = new Thread(clientRunnable, "ClientRunnable");
+			clientThread.setDaemon(true);
+			clientThread.start();
+			final Runnable heartbeatRunnable = () -> {
 				while (!Thread.currentThread().isInterrupted()) {
 					sendMessageToAll(new Heartbeat(null));
 					try {
@@ -62,9 +66,9 @@ public class Server {
 					}
 				}
 			};
-			Thread beat = new Thread(heartbeat);
-			beat.setDaemon(true);
-			beat.start();
+			Thread heartbeatThread = new Thread(heartbeatRunnable);
+			heartbeatThread.setDaemon(true);
+			heartbeatThread.start();
 		} catch (IOException e) {
 			LOG.error("Error initializing the server", e);
 			throw e;

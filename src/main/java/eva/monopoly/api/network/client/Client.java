@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import eva.monopoly.api.network.api.HandlerException;
 import eva.monopoly.api.network.api.SocketConnector;
+import eva.monopoly.api.network.api.messages.Heartbeat;
 import eva.monopoly.api.network.api.messages.NameInfo;
 
 public class Client {
@@ -26,6 +27,9 @@ public class Client {
 			socketConnector.registerHandle(NameInfo.class, (con, nameInfo) -> {
 				this.remoteName = nameInfo.getName();
 				LOG.info("Server name: {}", remoteName);
+			});
+			socketConnector.registerHandle(Heartbeat.class, (con, heartbeat) -> {
+				con.sendMessage(heartbeat);
 			});
 			socketConnector.establishConnection();
 			socketConnector.sendMessage(new NameInfo(name));

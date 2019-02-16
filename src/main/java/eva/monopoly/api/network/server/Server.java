@@ -5,6 +5,7 @@ import java.net.ServerSocket;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import eva.monopoly.api.network.api.ExchangeMessage;
 import eva.monopoly.api.network.api.ExchangeMessageHandle;
 import eva.monopoly.api.network.api.HandlerException;
 import eva.monopoly.api.network.api.SocketConnector;
+import eva.monopoly.api.network.api.messages.Heartbeat;
 import eva.monopoly.api.network.api.messages.NameInfo;
 
 public class Server {
@@ -33,6 +35,8 @@ public class Server {
 				socketConnectors.put(nameInfo.getName(), con);
 				LOG.info("Client name: {}", nameInfo.getName());
 			});
+			registerClientHandle(Heartbeat.class, (con, heartbeat) -> {
+			});
 
 			serverSocket = new ServerSocket(port);
 
@@ -49,6 +53,18 @@ public class Server {
 				}
 			};
 			new Thread(runnable).start();
+			final Runnable heartbeat = () -> {
+				while (!Thread.currentThread().isInterrupted()) {
+					sendMessageToAll(new Heartbeat(null));
+					try {
+						TimeUnit.SECONDS.sleep(10);
+					} catch (InterruptedException e) {
+					}
+				}
+			};
+			Thread beat = new Thread(heartbeat);
+			beat.setDaemon(true);
+			beat.start();
 		} catch (IOException e) {
 			LOG.error("Error initializing the server", e);
 			throw e;

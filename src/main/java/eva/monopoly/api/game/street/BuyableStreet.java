@@ -6,6 +6,8 @@ import java.util.List;
 import eva.monopoly.api.game.player.Player;
 
 public abstract class BuyableStreet extends Street {
+	private static final long serialVersionUID = 1694787627761809002L;
+
 	private int mortgageValue;
 	private String group;
 	private int cost;

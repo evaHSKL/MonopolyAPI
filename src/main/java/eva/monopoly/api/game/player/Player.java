@@ -1,5 +1,6 @@
 package eva.monopoly.api.game.player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,9 +8,12 @@ import eva.monopoly.api.game.card.Card;
 import eva.monopoly.api.game.card.cards.UnjailCard;
 import eva.monopoly.api.game.street.BuyableStreet;
 
-public class Player {
+public class Player implements Serializable {
+	private static final long serialVersionUID = 2463514783551698999L;
+
 	private static final int START_MONEY = 1500;
 	private static final int START_POS = 0;
+
 	private String name;
 	private int money;
 	private Pawn playerPawn;

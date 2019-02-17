@@ -4,6 +4,7 @@ import eva.monopoly.api.game.player.Player;
 import eva.monopoly.api.game.street.BuyableStreet;
 
 public abstract class BuyableFactoryStreet extends BuyableStreet {
+	private static final long serialVersionUID = 4728362737692371900L;
 
 	private int factorsingle;
 	private int factorgroup;

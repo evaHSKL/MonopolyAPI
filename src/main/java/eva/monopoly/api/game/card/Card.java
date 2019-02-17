@@ -1,8 +1,12 @@
 package eva.monopoly.api.game.card;
 
+import java.io.Serializable;
+
 import eva.monopoly.api.game.player.Player;
 
-public abstract class Card {
+public abstract class Card implements Serializable {
+	private static final long serialVersionUID = -2539896488029253520L;
+
 	private String text;
 	private CardType type;
 

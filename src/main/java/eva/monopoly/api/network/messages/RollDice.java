@@ -7,17 +7,20 @@ public class RollDice extends ExchangeMessage {
 
 	private final int amount;
 	private final boolean doublets;
+	private final boolean doubletsJail;
 
 	public RollDice(String name) {
 		super(name);
 		this.amount = 0;
 		this.doublets = false;
+		this.doubletsJail = false;
 	}
 
-	public RollDice(String name, int amount, boolean doublets) {
+	public RollDice(String name, int amount, boolean doublets, boolean doubletsJail) {
 		super(name);
 		this.amount = amount;
 		this.doublets = doublets;
+		this.doubletsJail = doubletsJail;
 	}
 
 	public int getAmount() {
@@ -26,5 +29,9 @@ public class RollDice extends ExchangeMessage {
 
 	public boolean isDoublets() {
 		return doublets;
+	}
+
+	public boolean isDoubletsJail() {
+		return doubletsJail;
 	}
 }

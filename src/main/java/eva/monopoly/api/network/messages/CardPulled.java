@@ -10,11 +10,13 @@ public class CardPulled extends ExchangeMessage {
 
 	private final Card card;
 	private final OptionalInt moneyAmount;
+	private final int newMoney;
 
-	public CardPulled(String name, Card card, OptionalInt moneyAmount) {
+	public CardPulled(String name, Card card, OptionalInt moneyAmount, int newMoney) {
 		super(name);
 		this.card = card;
 		this.moneyAmount = moneyAmount;
+		this.newMoney = newMoney;
 	}
 
 	public Card getCard() {
@@ -23,5 +25,9 @@ public class CardPulled extends ExchangeMessage {
 
 	public OptionalInt getMoneyAmount() {
 		return moneyAmount;
+	}
+
+	public int getNewMoney() {
+		return newMoney;
 	}
 }

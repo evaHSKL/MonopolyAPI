@@ -3,7 +3,7 @@ package eva.monopoly.api.network.server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.SocketException;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
@@ -22,7 +22,7 @@ import eva.monopoly.api.network.api.messages.NameInfo;
 public class Server {
 	public final static Logger LOG = LoggerFactory.getLogger(Server.class);
 
-	private HashMap<String, SocketConnector> socketConnectors = new HashMap<>();
+	private ConcurrentHashMap<String, SocketConnector> socketConnectors = new ConcurrentHashMap<>();
 
 	private final ConcurrentHashMap<Class<? extends ExchangeMessage>, ExchangeMessageHandle<? extends ExchangeMessage>> handler = new ConcurrentHashMap<>();
 
@@ -108,7 +108,7 @@ public class Server {
 		}
 	}
 
-	public HashMap<String, SocketConnector> getSocketConnectors() {
+	public Map<String, SocketConnector> getSocketConnectors() {
 		return socketConnectors;
 	}
 

@@ -10,6 +10,11 @@ public class GetPlayers extends ExchangeMessage {
 
 	private final List<Player> players;
 
+	public GetPlayers(String name) {
+		super(name);
+		this.players = null;
+	}
+
 	public GetPlayers(String name, List<Player> players) {
 		super(name);
 		this.players = players;

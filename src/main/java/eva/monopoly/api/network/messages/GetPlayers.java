@@ -15,8 +15,8 @@ public class GetPlayers extends ExchangeMessage {
 		this.players = null;
 	}
 
-	public GetPlayers(String name, List<Player> players) {
-		super(name);
+	public GetPlayers(List<Player> players) {
+		super(null);
 		this.players = players;
 	}
 

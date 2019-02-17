@@ -17,6 +17,6 @@ public class Unjail extends ExchangeMessage {
 	}
 
 	public static enum UnjailReason {
-		PAYED, CARD, DOUBLETS;
+		PAYED, CARD;
 	}
 }

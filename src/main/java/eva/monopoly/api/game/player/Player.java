@@ -55,12 +55,12 @@ public class Player {
 		p.modifyMoney(money);
 	}
 
-	public void sendToJail() {
+	public void jail() {
 		positionIndex = 10;
 		jailed = true;
 	}
 
-	public void releaseFromJail() {
+	public void unjail() {
 		jailed = false;
 	}
 

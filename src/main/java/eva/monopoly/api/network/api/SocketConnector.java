@@ -1,12 +1,9 @@
 package eva.monopoly.api.network.api;
 
-import java.io.EOFException;
 import java.io.IOException;
-import java.io.InterruptedIOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -60,23 +57,11 @@ public class SocketConnector {
 					final Object obj = in.readObject();
 					log.debug("Received message of type: {}", obj.getClass().getSimpleName());
 					solveMessage((ExchangeMessage) obj);
-				} catch (InterruptedIOException e) {
+				} catch (Exception e) {
 					if (!future.isCancelled()) {
-						future.cancel(false);
+						future.cancel(true);
 						handleException("Unexpected interrupt", e);
 					}
-					return;
-				} catch (SocketException e) {
-					if (future.isCancelled()) {
-						break;
-					}
-					handleException("Socket closed unexpectedly!", e);
-
-					return;
-				} catch (EOFException e) {
-
-				} catch (Exception e) {
-					handleException("Error receiving a message", e);
 					return;
 				}
 			}
@@ -123,7 +108,7 @@ public class SocketConnector {
 	private void handleException(String reason, Throwable e) {
 		log.debug("Handling an exception from sending or receiving a message...", e);
 		exceptionHandler.accept(this, new HandlerException(reason, e));
-		log.debug("Exception was handled", e);
+		log.debug("Exception was handled");
 	}
 
 	private void solveMessage(ExchangeMessage obj) {

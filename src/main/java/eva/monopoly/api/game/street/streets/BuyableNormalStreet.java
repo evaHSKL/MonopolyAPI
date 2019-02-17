@@ -8,13 +8,13 @@ import eva.monopoly.api.game.street.BuyableStreet;
 public abstract class BuyableNormalStreet extends BuyableStreet {
 	private static final long serialVersionUID = -1444467315701507275L;
 
-	private int nohouse;
-	private int onehouse;
-	private int twohouses;
-	private int threehouses;
-	private int fourhouses;
-	private int hotel;
-	private int housecost;
+	private final int nohouse;
+	private final int onehouse;
+	private final int twohouses;
+	private final int threehouses;
+	private final int fourhouses;
+	private final int hotel;
+	private final int housecost;
 	private int houses;
 
 	public BuyableNormalStreet(String name, int mortgageValue, String group, int cost, int nohouse, int onehouse,

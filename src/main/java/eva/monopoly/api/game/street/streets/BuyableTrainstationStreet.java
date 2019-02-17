@@ -6,10 +6,10 @@ import eva.monopoly.api.game.street.BuyableStreet;
 public abstract class BuyableTrainstationStreet extends BuyableStreet {
 	private static final long serialVersionUID = 2362859921197668094L;
 
-	public int onestation;
-	public int twostations;
-	public int threestations;
-	public int fourstations;
+	private final int onestation;
+	private final int twostations;
+	private final int threestations;
+	private final int fourstations;
 
 	public BuyableTrainstationStreet(String name, int mortgageValue, String group, int cost, int onestation,
 			int twostations, int threestations, int fourstations) {

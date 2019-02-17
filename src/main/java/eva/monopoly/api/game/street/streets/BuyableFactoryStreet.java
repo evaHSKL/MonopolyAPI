@@ -6,8 +6,8 @@ import eva.monopoly.api.game.street.BuyableStreet;
 public abstract class BuyableFactoryStreet extends BuyableStreet {
 	private static final long serialVersionUID = 4728362737692371900L;
 
-	private int factorsingle;
-	private int factorgroup;
+	private final int factorsingle;
+	private final int factorgroup;
 
 	public BuyableFactoryStreet(String name, int mortgageValue, String group, int cost, int factorsingle,
 			int factorgroup) {

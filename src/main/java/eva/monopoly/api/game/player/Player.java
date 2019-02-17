@@ -12,7 +12,7 @@ public class Player {
 	private String name;
 	private int money;
 	private Pawn playerPawn;
-	private boolean jailed;
+	private int jailed;
 	private int positionIndex;
 	private List<BuyableStreet> streets;
 	private List<Card> cards;
@@ -22,7 +22,7 @@ public class Player {
 		positionIndex = START_POS;
 		this.name = name;
 		this.playerPawn = playerPawn;
-		jailed = false;
+		jailed = 0;
 		streets = new ArrayList<BuyableStreet>();
 	}
 
@@ -57,15 +57,23 @@ public class Player {
 
 	public void jail() {
 		positionIndex = 10;
-		jailed = true;
+		jailed = 1;
 	}
 
 	public void unjail() {
-		jailed = false;
+		jailed = 0;
 	}
 
 	public boolean isJailed() {
-		return jailed;
+		return jailed != 0;
+	}
+
+	public boolean hasToLeaveJail() {
+		if (jailed == 3) {
+			return true;
+		}
+		jailed++;
+		return false;
 	}
 
 	public List<BuyableStreet> getStreets() {

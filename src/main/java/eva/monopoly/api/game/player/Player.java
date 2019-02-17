@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import eva.monopoly.api.game.card.Card;
+import eva.monopoly.api.game.card.cards.UnjailCard;
 import eva.monopoly.api.game.street.BuyableStreet;
 
 public class Player {
@@ -73,6 +74,16 @@ public class Player {
 			return true;
 		}
 		jailed++;
+		return false;
+	}
+
+	public boolean useUnjailCard() {
+		for (Card c : cards) {
+			if (c instanceof UnjailCard) {
+				cards.remove(c);
+				return true;
+			}
+		}
 		return false;
 	}
 

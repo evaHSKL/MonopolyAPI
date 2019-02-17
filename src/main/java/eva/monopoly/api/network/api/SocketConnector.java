@@ -87,6 +87,11 @@ public class SocketConnector {
 		log.info("Connection closed");
 	}
 
+	public static void shutdownThreadPools() {
+		EXECUTOR.shutdown();
+		MESSAGE_DISPATCHER.shutdown();
+	}
+
 	public Socket getSocket() {
 		return socket;
 	}
@@ -100,7 +105,10 @@ public class SocketConnector {
 			}
 			return true;
 		} catch (Exception e) {
-			handleException("Could not send message!", e);
+			if (!future.isCancelled()) {
+				future.cancel(true);
+				handleException("Could not send message!", e);
+			}
 		}
 		return false;
 	}

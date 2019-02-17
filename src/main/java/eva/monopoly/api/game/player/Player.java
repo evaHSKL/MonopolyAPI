@@ -91,12 +91,14 @@ public class Player {
 		return streets;
 	}
 
-	public boolean addStreet(BuyableStreet e) {
-		return streets.add(e);
+	public boolean addStreet(BuyableStreet s) {
+		s.setOwner(this);
+		return streets.add(s);
 	}
 
-	public boolean removeStreet(BuyableStreet o) {
-		return streets.remove(o);
+	public boolean removeStreet(BuyableStreet s) {
+		s.setOwner(null);
+		return streets.remove(s);
 	}
 
 	public void transferStreet(Player p, BuyableStreet street) {
@@ -113,12 +115,12 @@ public class Player {
 		return cards;
 	}
 
-	public boolean addCard(Card e) {
-		return cards.add(e);
+	public boolean addCard(Card c) {
+		return cards.add(c);
 	}
 
-	public boolean removeCard(Card o) {
-		return cards.remove(o);
+	public boolean removeCard(Card c) {
+		return cards.remove(c);
 	}
 
 	public void transferCard(Player p, Card card) {

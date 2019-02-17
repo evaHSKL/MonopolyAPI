@@ -9,12 +9,16 @@ public abstract class BuyableStreet extends Street {
 	private int mortgageValue;
 	private String group;
 	private int cost;
+	private Player owner;
+	private boolean hasMortgage;
 
 	public BuyableStreet(String name, int mortgageValue, String group, int cost) {
 		super(name);
 		this.mortgageValue = mortgageValue;
 		this.group = group;
 		this.cost = cost;
+		this.owner = null;
+		this.hasMortgage = false;
 	}
 
 	public int getMortgageValue() {
@@ -30,7 +34,7 @@ public abstract class BuyableStreet extends Street {
 	}
 
 	protected int chargeFee(Player p, int dice, Player streetOwner, int modifier) {
-		if (streetOwner == null || streetOwner == p) {
+		if (streetOwner == null || streetOwner == p || hasMortgage) {
 			return 0;
 		}
 
@@ -64,5 +68,26 @@ public abstract class BuyableStreet extends Street {
 			}
 		}
 		return streetsOfPlayer;
+	}
+
+	public Player getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Player owner) {
+		this.owner = owner;
+	}
+
+	public boolean isHasMortgage() {
+		return hasMortgage;
+	}
+
+	public void setHasMortgage(boolean hasMortgage) {
+		if (hasMortgage) {
+			owner.modifyMoney(mortgageValue);
+		} else {
+			owner.modifyMoney((int) (-mortgageValue * 1.1));
+		}
+		this.hasMortgage = hasMortgage;
 	}
 }

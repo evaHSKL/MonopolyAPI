@@ -2,10 +2,10 @@ package eva.monopoly.api.network.messages;
 
 import eva.monopoly.api.network.api.ExchangeMessage;
 
-public class StartRound extends ExchangeMessage {
+public class StartStopRound extends ExchangeMessage {
 	private static final long serialVersionUID = 147328409676047602L;
 
-	public StartRound(String name) {
+	public StartStopRound(String name) {
 		super(name);
 	}
 

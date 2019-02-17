@@ -75,7 +75,9 @@ public abstract class BuyableStreet extends Street {
 	}
 
 	public void setOwner(Player owner) {
-		this.owner = owner;
+		if (this.owner == null || owner == null) {
+			this.owner = owner;
+		}
 	}
 
 	public boolean hasMortgage() {

@@ -34,14 +34,13 @@ public abstract class BuyableStreet extends Street {
 			return 0;
 		}
 
-		int fee = getFee(streetOwner, dice);
-		fee = fee * modifier;
+		int fee = getFee(streetOwner, dice, modifier);
 		p.transferMoney(streetOwner, fee);
 
 		return fee;
 	}
 
-	protected abstract int getFee(Player p, int dice);
+	protected abstract int getFee(Player p, int dice, int modifier);
 
 	protected abstract List<BuyableStreet> getAllStreets();
 

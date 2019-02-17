@@ -76,7 +76,7 @@ public abstract class BuyableNormalStreet extends BuyableStreet {
 	}
 
 	@Override
-	protected int getFee(Player p, int dice) {
+	protected int getFee(Player p, int dice, int modifier) {
 		switch (houses) {
 		case 0:
 			return nohouse;

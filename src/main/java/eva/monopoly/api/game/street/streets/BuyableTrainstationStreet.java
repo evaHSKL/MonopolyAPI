@@ -36,7 +36,7 @@ public abstract class BuyableTrainstationStreet extends BuyableStreet {
 	}
 
 	@Override
-	protected int getFee(Player p, int dice) {
+	protected int getFee(Player p, int dice, int modifier) {
 		switch (getStreetGroup(p, getGroup()).size()) {
 		case 1:
 			return onestation;

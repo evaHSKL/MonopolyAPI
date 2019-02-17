@@ -78,7 +78,7 @@ public abstract class BuyableStreet extends Street {
 		this.owner = owner;
 	}
 
-	public boolean isHasMortgage() {
+	public boolean hasMortgage() {
 		return hasMortgage;
 	}
 

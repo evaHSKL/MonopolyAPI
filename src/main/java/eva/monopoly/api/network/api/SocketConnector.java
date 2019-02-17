@@ -107,6 +107,10 @@ public class SocketConnector {
 
 	private void handleException(String reason, Throwable e) {
 		log.debug("Handling an exception from sending or receiving a message...", e);
+		try {
+			socket.close();
+		} catch (IOException e1) {
+		}
 		exceptionHandler.accept(this, new HandlerException(reason, e));
 		log.debug("Exception was handled");
 	}

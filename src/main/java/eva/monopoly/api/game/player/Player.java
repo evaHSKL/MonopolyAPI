@@ -29,6 +29,7 @@ public class Player implements Serializable {
 		this.playerPawn = playerPawn;
 		jailed = 0;
 		streets = new ArrayList<BuyableStreet>();
+		cards = new ArrayList<>();
 	}
 
 	public Pawn getPawn() {

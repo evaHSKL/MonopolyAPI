@@ -8,6 +8,12 @@ public class StartStopRound extends ExchangeMessage {
 	private final int newMoney;
 	private final int newPosition;
 
+	public StartStopRound(String name) {
+		super(name);
+		this.newMoney = -1;
+		this.newPosition = -1;
+	}
+
 	public StartStopRound(String name, int newMoney, int newPosition) {
 		super(name);
 		this.newMoney = newMoney;

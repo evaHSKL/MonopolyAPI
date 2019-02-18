@@ -36,7 +36,7 @@ public class Server {
 			registerClientHandle(NameInfo.class, (con, nameInfo) -> {
 				socketConnectors.put(nameInfo.getName(), con);
 				LOG.info("Client name: {}", nameInfo.getName());
-			}, true);
+			});
 			registerClientHandle(Heartbeat.class, (con, heartbeat) -> {
 			}, false);
 
@@ -143,6 +143,11 @@ public class Server {
 			}
 		}
 		return returnValue;
+	}
+
+	public <T extends ExchangeMessage> void registerClientHandle(Class<T> clazz,
+			BiConsumer<SocketConnector, T> consumer) {
+		registerClientHandle(clazz, consumer, true);
 	}
 
 	public <T extends ExchangeMessage> void registerClientHandle(Class<T> clazz,

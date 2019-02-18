@@ -36,9 +36,9 @@ public class Server {
 			registerClientHandle(NameInfo.class, (con, nameInfo) -> {
 				socketConnectors.put(nameInfo.getName(), con);
 				LOG.info("Client name: {}", nameInfo.getName());
-			});
+			}, true);
 			registerClientHandle(Heartbeat.class, (con, heartbeat) -> {
-			});
+			}, false);
 
 			serverSocket = new ServerSocket(port);
 
@@ -146,8 +146,8 @@ public class Server {
 	}
 
 	public <T extends ExchangeMessage> void registerClientHandle(Class<T> clazz,
-			BiConsumer<SocketConnector, T> consumer) {
-		final ExchangeMessageHandle<T> wrapper = new ExchangeMessageHandle<T>(clazz, consumer);
+			BiConsumer<SocketConnector, T> consumer, boolean inOrder) {
+		final ExchangeMessageHandle<T> wrapper = new ExchangeMessageHandle<T>(clazz, consumer, inOrder);
 		for (SocketConnector con : socketConnectors.values()) {
 			con.registerHandle(clazz, wrapper);
 		}

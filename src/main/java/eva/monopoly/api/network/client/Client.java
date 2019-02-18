@@ -27,10 +27,10 @@ public class Client {
 			socketConnector.registerHandle(NameInfo.class, (con, nameInfo) -> {
 				this.remoteName = nameInfo.getName();
 				LOG.info("Server name: {}", remoteName);
-			});
+			}, true);
 			socketConnector.registerHandle(Heartbeat.class, (con, heartbeat) -> {
 				con.sendMessage(heartbeat);
-			});
+			}, false);
 			socketConnector.establishConnection();
 			socketConnector.sendMessage(new NameInfo(name));
 		} catch (UnknownHostException e) {

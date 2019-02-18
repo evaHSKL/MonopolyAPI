@@ -3,6 +3,8 @@ package eva.monopoly.api.network.api;
 import java.io.Serializable;
 
 public abstract class ExchangeMessage implements Serializable {
+	private static final long serialVersionUID = -2894938167336591768L;
+
 	private final String name;
 
 	public ExchangeMessage(String name) {
@@ -12,7 +14,4 @@ public abstract class ExchangeMessage implements Serializable {
 	public String getName() {
 		return name;
 	}
-
-	private static final long serialVersionUID = -2894938167336591768L;
-
 }

@@ -37,8 +37,8 @@ public class SocketConnector {
 		this.exceptionHandler = exceptionHandler;
 
 		registerHandle(ExchangeMessage.class, (con, msg) -> log.warn("There was an unhandled message of type {}: {}",
-				msg.getClass().getSimpleName(), msg.toString()));
-		registerHandle(ConnectionClose.class, (con, conClose) -> future.cancel(false));
+				msg.getClass().getSimpleName(), msg.toString()), false);
+		registerHandle(ConnectionClose.class, (con, conClose) -> future.cancel(false), true);
 	}
 
 	public void establishConnection() throws IOException {
@@ -136,11 +136,16 @@ public class SocketConnector {
 			wrapper = handler.get(clazz.getSuperclass());
 		}
 		final ExchangeMessageHandle<? extends ExchangeMessage> finWrapper = wrapper;
-		MESSAGE_DISPATCHER.execute(() -> finWrapper.handle(this, obj));
+		if (finWrapper.isInOrder()) {
+			MESSAGE_DISPATCHER.execute(() -> finWrapper.handle(this, obj));
+		} else {
+			finWrapper.handle(this, obj);
+		}
 	}
 
-	public <T extends ExchangeMessage> void registerHandle(Class<T> clazz, BiConsumer<SocketConnector, T> consumer) {
-		final ExchangeMessageHandle<T> wrapper = new ExchangeMessageHandle<T>(clazz, consumer);
+	public <T extends ExchangeMessage> void registerHandle(Class<T> clazz, BiConsumer<SocketConnector, T> consumer,
+			boolean inOrder) {
+		final ExchangeMessageHandle<T> wrapper = new ExchangeMessageHandle<T>(clazz, consumer, inOrder);
 		handler.put(clazz, wrapper);
 	}
 

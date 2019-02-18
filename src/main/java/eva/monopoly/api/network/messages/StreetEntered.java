@@ -1,7 +1,5 @@
 package eva.monopoly.api.network.messages;
 
-import java.util.OptionalInt;
-
 import eva.monopoly.api.game.street.Street;
 import eva.monopoly.api.network.api.ExchangeMessage;
 
@@ -9,10 +7,10 @@ public class StreetEntered extends ExchangeMessage {
 	private static final long serialVersionUID = 5726050951454441818L;
 
 	private final Street street;
-	private final OptionalInt moneyAmount;
+	private final Integer moneyAmount;
 	private final int newMoney;
 
-	public StreetEntered(String name, Street street, OptionalInt moneyAmount, int newMoney) {
+	public StreetEntered(String name, Street street, Integer moneyAmount, int newMoney) {
 		super(name);
 		this.street = street;
 		this.moneyAmount = moneyAmount;
@@ -23,7 +21,7 @@ public class StreetEntered extends ExchangeMessage {
 		return street;
 	}
 
-	public OptionalInt getMoneyAmount() {
+	public Integer getMoneyAmount() {
 		return moneyAmount;
 	}
 

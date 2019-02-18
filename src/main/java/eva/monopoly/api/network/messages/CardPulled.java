@@ -1,7 +1,5 @@
 package eva.monopoly.api.network.messages;
 
-import java.util.OptionalInt;
-
 import eva.monopoly.api.game.card.Card;
 import eva.monopoly.api.network.api.ExchangeMessage;
 
@@ -9,12 +7,12 @@ public class CardPulled extends ExchangeMessage {
 	private static final long serialVersionUID = 864136270152575003L;
 
 	private final Card card;
-	private final OptionalInt moneyAmount;
-	private final OptionalInt positionAmount;
+	private final Integer moneyAmount;
+	private final Integer positionAmount;
 	private final int newMoney;
 	private final int newPosition;
 
-	public CardPulled(String name, Card card, OptionalInt moneyAmount, int newMoney, OptionalInt positionAmount,
+	public CardPulled(String name, Card card, Integer moneyAmount, int newMoney, Integer positionAmount,
 			int newPosition) {
 		super(name);
 		this.card = card;
@@ -28,7 +26,7 @@ public class CardPulled extends ExchangeMessage {
 		return card;
 	}
 
-	public OptionalInt getMoneyAmount() {
+	public Integer getMoneyAmount() {
 		return moneyAmount;
 	}
 
@@ -36,7 +34,7 @@ public class CardPulled extends ExchangeMessage {
 		return newMoney;
 	}
 
-	public OptionalInt getPositionAmount() {
+	public Integer getPositionAmount() {
 		return positionAmount;
 	}
 
